@@ -2,7 +2,7 @@
 
 import { Game } from '../engine'
 
-export let box = new Game.Item(ctx => {
+export let box = new Game.objects.Item(ctx => {
   ctx.beginPath()
   ctx.rect(0, 0, 40, 40)
   ctx.fillStyle = '#000'

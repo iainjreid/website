@@ -1,10 +1,14 @@
 'use strict'
 
-import { config } from './lib'
-import { Layer } from '../View/Layer'
+// Dependencies
+import { Platform } from '../../Platform'
+import { Layer } from '../../View/Layer'
+import { Base } from './base'
 
-class Item {
+class GameItem extends Base {
   constructor (draw, width, height) {
+    super()
+
     this._canvas = document.createElement('canvas')
     this._ctx = this._canvas.getContext('2d')
 
@@ -14,10 +18,6 @@ class Item {
 
     // Draw the object
     draw(this._ctx)
-  }
-
-  coordinates (x, y) {
-    this._coordinates = { x, y }
   }
 
   draw (layer) {
@@ -31,7 +31,7 @@ class Item {
       throw Error('No coordinates have been specified')
     }
 
-    if (config.debugEnabled) {
+    if (Platform.config.debugEnabled) {
       // Draw a boundry box
       layer._ctx.beginPath()
       layer._ctx.strokeRect(this._coordinates.x, this._coordinates.y, this._ctx.canvas.width, this._ctx.canvas.height)
@@ -42,4 +42,4 @@ class Item {
   }
 }
 
-export { Item }
+export { GameItem as Item }

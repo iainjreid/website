@@ -1,10 +1,10 @@
 'use strict'
 
-import { Item } from '../Game/Item'
+import { Base } from '../Game/objects/base'
 
 function boxes (item1, item2) {
   // Ensure that the items are valid
-  if (!(item1 instanceof Item) || !(item1 instanceof Item)) {
+  if (!(item1 instanceof Base) || !(item1 instanceof Base)) {
     throw Error('Collisions may only be calculated between valid Items')
   }
 

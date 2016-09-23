@@ -31,16 +31,8 @@ module.exports = {
         loader: 'babel-loader'
       },
       {
-        test: /\.tpl\.html$/,
-        loader: 'html-loader'
-      },
-      {
-        test: /\.(css|scss)$/,
-        loaders: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
+        test: /\.png$/,
+        loader: 'file-loader'
       }
     ]
   },

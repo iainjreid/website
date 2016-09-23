@@ -2,7 +2,7 @@
 
 import { Game } from '../engine'
 
-export let ball = new Game.Item(ctx => {
+export let ball = new Game.objects.Item(ctx => {
   ctx.beginPath()
   ctx.arc(30, 30, 30, Math.PI * 2, false)
   ctx.fillStyle = '#FF0000'

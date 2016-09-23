@@ -1,7 +1,8 @@
 'use strict'
 
-import { loop, Input, Util, View } from './engine'
-import { ball, box } from './assets'
+import { Game, Input, Util, View } from './engine'
+import { ball } from './assets'
+import { player } from './objects/player'
 
 const rootLayer = View.createLayer()
 
@@ -20,7 +21,7 @@ window.addEventListener('resize', () => {
   my = rootLayer.getHeight() / 4
 }, false)
 
-loop(() => {
+Game.loop.add(() => {
   rootLayer.clearCanvas()
 
   // Box Control
@@ -40,14 +41,14 @@ loop(() => {
     mx += 4
   }
 
-  box.coordinates(mx, my)
+  player.coordinates(mx, my)
 
   // Ball Control
-  if (bx + ballRadius * 2 > rootLayer.getWidth() || bx <= 0 || Util.collision.boxes(box, ball)) {
+  if (bx + ballRadius * 2 > rootLayer.getWidth() || bx <= 0 || Util.collision.boxes(player, ball)) {
     dx = -dx
   }
 
-  if (by + ballRadius * 2 > rootLayer.getHeight() || by <= 0 || Util.collision.boxes(box, ball)) {
+  if (by + ballRadius * 2 > rootLayer.getHeight() || by <= 0 || Util.collision.boxes(player, ball)) {
     dy = -dy
   }
 
@@ -57,5 +58,7 @@ loop(() => {
   ball.coordinates(bx, by)
 
   ball.draw(rootLayer)
-  box.draw(rootLayer)
+  player.draw(rootLayer)
 })
+
+Game.loop.start()

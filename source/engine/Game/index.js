@@ -1,8 +1,12 @@
 'use strict'
 
-// Dependencies
-import { config } from './lib'
-import { Item } from './Item'
+// Game loop
+import { loop } from './loop'
 
-export { config }
-export let Game = { Item }
+// Game objects
+import { Item } from './objects/Item'
+import { Sprite } from './objects/Sprite'
+
+const objects = { Item, Sprite }
+
+export let Game = { objects, loop }
