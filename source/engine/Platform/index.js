@@ -2,7 +2,7 @@
 
 const config = {
   debugEnabled: true,
-  targetFps: 60
+  targetFps: 100
 }
 
 export const Platform = { config }

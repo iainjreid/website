@@ -9,19 +9,19 @@ function boxes (item1, item2) {
   }
 
   if (item1._coordinates && item2._coordinates) {
-    if (item1._coordinates.x + item1._canvas.width < item2._coordinates.x) {
+    if (item1._coordinates.x + item1._width < item2._coordinates.x) {
       return false
     }
 
-    if (item1._coordinates.x > item2._coordinates.x + item2._canvas.width) {
+    if (item1._coordinates.x > item2._coordinates.x + item2._width) {
       return false
     }
 
-    if (item1._coordinates.y + item1._canvas.height < item2._coordinates.y) {
+    if (item1._coordinates.y + item1._height < item2._coordinates.y) {
       return false
     }
 
-    if (item1._coordinates.y > item2._coordinates.y + item2._canvas.height) {
+    if (item1._coordinates.y > item2._coordinates.y + item2._height) {
       return false
     }
   }

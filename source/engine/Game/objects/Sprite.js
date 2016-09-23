@@ -9,18 +9,14 @@ class GameSprite extends Base {
   constructor (spritesheet, width, height, frames) {
     super()
 
-    this._canvas = document.createElement('canvas')
-    this._ctx = this._canvas.getContext('2d')
-
-    // Update the width and height of the canvas
-    this._canvas.width = width
-    this._canvas.height = height
-
     // Store a reference to the spritesheet and its metadata
     const img = new Image()
     img.src = spritesheet
     img.onload = () => {
       this._spritesheet = img
+      this._width = width
+      this._height = height
+      this._frame = 0
       this._frames = frames
     }
   }
@@ -39,11 +35,26 @@ class GameSprite extends Base {
     if (Platform.config.debugEnabled) {
       // Draw a boundry box
       layer._ctx.beginPath()
-      layer._ctx.strokeRect(this._coordinates.x, this._coordinates.y, this._ctx.canvas.width, this._ctx.canvas.height)
+      layer._ctx.strokeRect(this._coordinates.x, this._coordinates.y, this._width, this._height)
       layer._ctx.closePath()
     }
 
-    layer._ctx.drawImage(this._spritesheet, this._coordinates.x, this._coordinates.y)
+    layer._ctx.drawImage(this._spritesheet, ...this.animation())
+  }
+
+  animation () {
+    this._frame = this._frame < this._frames ? this._frame + 1 : 1
+
+    return [
+      this._width * (this._frame - 1),
+      0,
+      this._width,
+      this._height,
+      this._coordinates.x,
+      this._coordinates.y,
+      this._width,
+      this._height
+    ]
   }
 }
 
