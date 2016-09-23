@@ -14,5 +14,7 @@ export let loop = (fn) => {
   }, 1000 / 60)
 }
 
+export { Input } from './Input'
 export { Game } from './Game'
+export { Util } from './Util'
 export { View } from './View'
