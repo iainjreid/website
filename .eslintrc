@@ -6,6 +6,7 @@
     "promise"
   ],
   "globals": {
-    "Image": true
+    "Image": true,
+    "performance": true
   }
 }

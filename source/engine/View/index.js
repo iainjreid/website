@@ -14,8 +14,8 @@ function getLayers () {
 }
 
 /**
- * To ensure that the application respects the boundaries of the Browser window,
- * we must resize all of the relevant Layers.
+ * To ensure that the application respects the boundaries of the Browser window, we must resize all of the relevant
+ * Layers.
  */
 window.addEventListener('resize', () => {
   let layer

@@ -3,9 +3,18 @@
 // Dependencies
 import { Platform } from '../../Platform'
 
+/**
+ * @module loop
+ *
+ * @description The Game loop ensures that the correct frame-rate is acheieved consistantly throughout the lifecycle of
+ *              the application.
+ */
 let tasks = []
 let intervalId
 
+/**
+ *
+ */
 function add (fn) {
   // Ensure that a function has been provided
   if (typeof fn !== 'function') {

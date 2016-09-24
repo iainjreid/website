@@ -1,16 +1,51 @@
 'use strict'
 
-/**
- * @description Layers are the foundation upon which the visible canvas is built. They are passed around within the game
- *              engine to enable components that wish to draw to the window to do so in a controlled manner.
- */
+// Dependencies
+import { Base } from '../../Entities/classes'
+
 class Layer {
-  constructor (width, height) {
-    this._canvas = document.getElementById('viewCanvas')
+  constructor (uid, width, height) {
+    // Ensure that the unique identifier is valid
+    if (typeof uid !== 'string') {
+      throw Error('The UID must be a string')
+    }
+
+    this._uid = uid
+
+    // Create the canvas objects
+    this._canvas = document.createElement('canvas')
     this._ctx = this._canvas.getContext('2d')
 
-    // Resize the canvas by default
+    // Resize the canvas
     return this.resizeCanvas(width, height)
+  }
+
+  /**
+   * @description This method will return this unique identifier assigned to the Layer.
+   *
+   * @return {String} The unique identifier assigned to the Layer
+   */
+  getUid () {
+    return this._uid
+  }
+
+  /**
+   * @description This method will return a reference to the canvas element belonging to the Layer.
+   *
+   * @return {Object} The canvas belonging to the Layer
+   */
+  getCanvas () {
+    return this._canvas
+  }
+
+  /**
+   * @description This method will return a reference to the context derived from the canvas element belonging to the
+   *              Layer.
+   *
+   * @return {Object} The canvas context belonging to this Layer
+   */
+  getContext () {
+    return this._ctx
   }
 
   /**
@@ -29,6 +64,15 @@ class Layer {
    */
   getHeight () {
     return this._canvas.height
+  }
+
+  addEntity (entity, dx, dy) {
+    // Ensure that the entity is valid
+    if (!(entity instanceof Base)) {
+      throw Error('Entities must be valid')
+    }
+
+    return this._ctx.drawImage(entity, dx, dy)
   }
 
   /**
@@ -59,8 +103,8 @@ class Layer {
       throw Error('Cannot resize canvas when boundaries are locked')
     }
 
-    this._canvas.width = width || window.innerWidth
-    this._canvas.height = height || window.innerHeight
+    this._canvas.width = this._width = width || window.innerWidth
+    this._canvas.height = this._height = height || window.innerHeight
   }
 }
 
