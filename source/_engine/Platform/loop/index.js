@@ -1,14 +1,12 @@
 'use strict'
 
 // Dependencies
-import { config } from '../Platform/config'
+import { config } from '../config'
 
 /**
- * @module Loop
- *
- * @description The Loop maintains a consistant frame-rate throughout the lifecycle of the application.
+ * @description The loop maintains a consistant frame-rate throughout the lifecycle of the application.
  */
-const Loop = {}
+const loop = {}
 let tasks = []
 let intervalId
 
@@ -17,9 +15,9 @@ let intervalId
  *
  * @param {Function} fn - The function to add to the processing cycle
  *
- * @returns {Object} The Loop object
+ * @returns {Object} The loop object
  */
-Loop.add = (fn) => {
+loop.add = (fn) => {
   // Ensure that a function has been provided
   if (typeof fn !== 'function') {
     throw Error('Only functions may be added to the loop')
@@ -28,15 +26,15 @@ Loop.add = (fn) => {
   tasks.push(fn)
 
   // Return the Loop object
-  return Loop
+  return loop
 }
 
 /**
  * @description This method will start the processing cycle.
  *
- * @returns {Object} The Loop object
+ * @returns {Object} The loop object
  */
-Loop.start = () => {
+loop.start = () => {
   let t0, t1
 
   intervalId = setInterval(() => {
@@ -60,21 +58,21 @@ Loop.start = () => {
   }, 1000 / config.targetFps)
 
   // Return the Loop object
-  return Loop
+  return loop
 }
 
 /**
  * @description This method will stop the processing cycle.
  *
- * @returns {Object} The Loop object
+ * @returns {Object} The loop object
  */
-Loop.stop = () => {
+loop.stop = () => {
   clearInterval(intervalId)
 
-  // Return the Loop object
-  return Loop
+  // Return the loop object
+  return loop
 }
 
-window.onerror = Loop.stop
+window.onerror = loop.stop
 
-export { Loop }
+export { loop }

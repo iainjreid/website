@@ -1,10 +1,8 @@
 'use strict'
 
 // Dependencies
-import { Layer } from './layer'
-import { Loop } from '../Loop'
-import { config } from '../Platform/config'
-import { utils } from '../Platform/utils'
+import { Item } from './Item'
+import { Layer } from './Layer'
 
 /**
  * @module View
@@ -16,11 +14,7 @@ import { utils } from '../Platform/utils'
  *              Note that objects are drawn onto Layers, and not directly to the View.
  */
 const View = {}
-const layers = {}
-
-// Root canvas and ctx
-const canvas = document.getElementById(config.view.rootCanvas)
-const ctx = canvas.getContext('2d')
+const layers = []
 
 /**
  * @description This method will create a new Layer and add it to the View. The Layer must be given some sort of unique
@@ -31,13 +25,8 @@ const ctx = canvas.getContext('2d')
  *
  * @return {Layer} The newly created Layer
  */
-View.createLayer = (uid = utils.generateUid(), width, height) => {
-  const layer = layers[layers.length] = new Layer(uid, width, height)
-
-  Loop.add(() => {
-    // Add the Layer to the View
-    ctx.drawImage(layer.getContext().canvas, 10, 10)
-  })
+View.createLayer = (elementId, width, height) => {
+  const layer = layers[layers.length] = new Layer(width, height)
 
   return layer
 }
@@ -72,11 +61,6 @@ View.getLayers = () => {
  * Layers.
  */
 window.addEventListener('resize', () => {
-  // Resize the root canvas
-  canvas.width = window.innerWidth
-  canvas.height = window.innerHeight
-
-  // Resize the child canvases
   let layer
 
   for (let i = 0, n = layers.length; i < n; i++) {
@@ -87,4 +71,4 @@ window.addEventListener('resize', () => {
   }
 }, false)
 
-export { View }
+export { View, Item, Layer }
