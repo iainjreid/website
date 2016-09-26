@@ -2,9 +2,11 @@
 
 // Dependencies
 import { Base } from '../../Entities/classes'
+import { Loop } from '../../Loop'
+import { config } from '../../Platform/config'
 
 class Layer {
-  constructor (uid, width, height) {
+  constructor (uid, width = window.innerWidth, height = window.innerHeight) {
     // Ensure that the unique identifier is valid
     if (typeof uid !== 'string') {
       throw Error('The UID must be a string')
@@ -16,8 +18,7 @@ class Layer {
     this._canvas = document.createElement('canvas')
     this._ctx = this._canvas.getContext('2d')
 
-    // Resize the canvas
-    return this.resizeCanvas(width, height)
+    this.resizeCanvas(width, height)
   }
 
   /**
@@ -66,13 +67,16 @@ class Layer {
     return this._canvas.height
   }
 
-  addEntity (entity, dx, dy) {
+  addEntity (entity, dx = 0, dy = 0) {
     // Ensure that the entity is valid
     if (!(entity instanceof Base)) {
       throw Error('Entities must be valid')
     }
 
-    return this._ctx.drawImage(entity.getCanvas(), dx, dy)
+    Loop.add(() => {
+      entity.$draw(entity._ctx)
+      this._ctx.drawImage(entity._ctx.canvas, dx, dy)
+    })
   }
 
   /**
@@ -84,10 +88,23 @@ class Layer {
   }
 
   /**
+   * @description This method will unlock the boundaries of the Layer, allowing manual or automatic resizing of the
+   *              Layer.
+   */
+  unlockBoundaries () {
+    this._boundariesLocked = false
+  }
+
+  /**
    * @description This method will completely clear the canvas.
    */
   clearCanvas () {
     this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height)
+
+    if (config.debugEnabled) {
+      // Draw a boundry box
+      this._ctx.strokeRect(0, 0, this._canvas.width, this._canvas.height)
+    }
   }
 
   /**
@@ -97,14 +114,14 @@ class Layer {
    * @param {Number=} width  - The desired width to be set
    * @param {Number=} height - The desired height to be set
    */
-  resizeCanvas (width, height) {
+  resizeCanvas (width = window.innerWidth, height = window.innerHeight) {
     // Ensure that the Layer boundaries are not locked
     if (this._boundariesLocked) {
       throw Error('Cannot resize canvas when boundaries are locked')
     }
 
-    this._canvas.width = this._width = width || window.innerWidth
-    this._canvas.height = this._height = height || window.innerHeight
+    this._canvas.width = this._width = width
+    this._canvas.height = this._height = height
   }
 }
 

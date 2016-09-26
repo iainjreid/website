@@ -7,8 +7,12 @@ const Item = class extends Entities.Basic {
     super(30, 30)
   }
 
-  draw () {
-
+  $draw (ctx) {
+    ctx.beginPath()
+    ctx.arc(30, 30, 30, Math.PI * 2, false)
+    ctx.fillStyle = '#FF0000'
+    ctx.fill()
+    ctx.closePath()
   }
 }
 
@@ -16,11 +20,7 @@ View
   .createLayer()
   .addEntity(new Item())
 
-Loop
-  .add(() => {
-    console.log('here')
-  })
-  .start()
+Loop.start()
 
 // import { Game, Input, Util, View } from './engine'
 // import { ball } from './assets'

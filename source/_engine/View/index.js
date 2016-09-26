@@ -2,6 +2,7 @@
 
 // Dependencies
 import { Layer } from './layer'
+import { Loop } from '../Loop'
 import { config } from '../Platform/config'
 import { utils } from '../Platform/utils'
 
@@ -30,11 +31,13 @@ const ctx = canvas.getContext('2d')
  *
  * @return {Layer} The newly created Layer
  */
-View.createLayer = (uid = utils.generateUid()) => {
-  const layer = layers[layers.length] = new Layer(uid)
+View.createLayer = (uid = utils.generateUid(), width, height) => {
+  const layer = layers[layers.length] = new Layer(uid, width, height)
 
-  // Add the Layer to the View
-  ctx.drawImage(layer._canvas, layer._width, layer._heigth)
+  Loop.add(() => {
+    // Add the Layer to the View
+    ctx.drawImage(layer.getContext().canvas, 10, 10)
+  })
 
   return layer
 }
@@ -69,6 +72,11 @@ View.getLayers = () => {
  * Layers.
  */
 window.addEventListener('resize', () => {
+  // Resize the root canvas
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
+
+  // Resize the child canvases
   let layer
 
   for (let i = 0, n = layers.length; i < n; i++) {
