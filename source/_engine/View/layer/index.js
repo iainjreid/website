@@ -72,7 +72,7 @@ class Layer {
       throw Error('Entities must be valid')
     }
 
-    return this._ctx.drawImage(entity, dx, dy)
+    return this._ctx.drawImage(entity.getCanvas(), dx, dy)
   }
 
   /**

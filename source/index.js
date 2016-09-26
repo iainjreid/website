@@ -2,19 +2,25 @@
 
 import { Entities, Loop, View } from './_engine'
 
-const layer = View.createLayer()
+const Item = class extends Entities.Basic {
+  constructor () {
+    super(30, 30)
+  }
 
-layer.addEntity(class extends Entities.Basic {
   draw () {
 
   }
-})
+}
 
-Loop.add(() => {
-  console.log('here')
-})
+View
+  .createLayer()
+  .addEntity(new Item())
 
-Loop.start()
+Loop
+  .add(() => {
+    console.log('here')
+  })
+  .start()
 
 // import { Game, Input, Util, View } from './engine'
 // import { ball } from './assets'

@@ -1,7 +1,7 @@
 'use strict'
 
 // Classes
-import { Basic, Sprite } from './classes'
+import { Base, Basic, Sprite } from './classes'
 
 /**
  * @module Entities
@@ -12,6 +12,7 @@ import { Basic, Sprite } from './classes'
  */
 const Entities = {}
 
+Entities.Base = Base
 Entities.Basic = Basic
 Entities.Sprite = Sprite
 
