@@ -13,7 +13,7 @@ import { Layer } from './Layer'
  *
  *              Note that objects are drawn onto Layers, and not directly to the View.
  */
-const View = {}
+const View = { Item, Layer }
 const layers = []
 
 /**
@@ -71,4 +71,4 @@ window.addEventListener('resize', () => {
   }
 }, false)
 
-export { View, Item, Layer }
+export { View }

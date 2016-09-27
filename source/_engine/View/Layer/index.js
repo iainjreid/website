@@ -1,9 +1,9 @@
 'use strict'
 
 // Dependencies
-import { Base } from '../../Entities/classes'
-import { Loop } from '../../Loop'
+import { Item } from '../Item'
 import { config } from '../../Platform/config'
+import { loop } from '../../Platform/loop'
 
 class Layer {
   constructor (width, height) {
@@ -55,12 +55,12 @@ class Layer {
 
   addEntity (entity, dx = 0, dy = 0) {
     // Ensure that the entity is valid
-    if (!(entity instanceof Base)) {
+    if (!(entity instanceof Item)) {
       throw Error('Entities must be valid')
     }
 
-    Loop.add(() => {
-      entity.$draw(entity._ctx)
+    loop.add(() => {
+      entity.draw(entity._ctx)
       this._ctx.drawImage(entity._ctx.canvas, dx, dy)
     })
   }

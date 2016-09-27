@@ -1,13 +1,16 @@
 'use strict'
 
 class Item {
-  constructor (width, height) {
+  constructor ({methods = {}, draw = Function, dimensions: {width, height}}) {
     this._canvas = document.createElement('canvas')
     this._ctx = this._canvas.getContext('2d')
 
     // Set the canvas width and height
     this._canvas.width = this._width = width
     this._canvas.height = this._height = height
+
+    // Store a reference to the draw function
+    this.draw = draw
   }
 
   /**

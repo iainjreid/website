@@ -1,26 +1,27 @@
 'use strict'
 
-import { Entities, Loop, View } from './_engine'
-
-const Item = class extends Entities.Basic {
-  constructor () {
-    super(30, 30)
-  }
-
-  $draw (ctx) {
-    ctx.beginPath()
-    ctx.arc(30, 30, 30, Math.PI * 2, false)
-    ctx.fillStyle = '#FF0000'
-    ctx.fill()
-    ctx.closePath()
-  }
-}
+import { Platform, View } from './_engine'
 
 View
   .createLayer()
-  .addEntity(new Item())
+  .addEntity(new View.Item({
+    methods: {
+      // No methods
+    },
+    draw: function (ctx) {
+      ctx.beginPath()
+      ctx.arc(30, 30, 30, Math.PI * 2, false)
+      ctx.fillStyle = '#FF0000'
+      ctx.fill()
+      ctx.closePath()
+    },
+    dimensions: {
+      width: 60,
+      height: 60
+    }
+  }))
 
-Loop.start()
+Platform.loop.start()
 
 // import { Game, Input, Util, View } from './engine'
 // import { ball } from './assets'
