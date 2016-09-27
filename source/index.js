@@ -2,48 +2,64 @@
 
 import { Platform, View } from './_engine'
 
-let dx = 2
-let dy = 2
+class Ball extends View.Item {
+  constructor (dx, dy) {
+    super(dx, dy, 60, 60)
 
-const ball = View.createItem({
-  draw: function (ctx) {
+    this.vectorX = 2
+    this.vectorY = 2
+  }
+
+  draw (ctx) {
     ctx.beginPath()
     ctx.arc(30, 30, 30, Math.PI * 2, false)
     ctx.fillStyle = '#FF0000'
     ctx.fill()
     ctx.closePath()
-  },
-  coordinates: {
-    dx: 10,
-    dy: 10
-  },
-  dimensions: {
-    width: 60,
-    height: 60
   }
-})
+}
 
-View
+const layer = View
   .createLayer()
-  .addEntity(ball)
+  .addEntity(new Ball(30, 30))
 
 Platform.loop
   .add(() => {
-    // Ball Control
-    let {dx: ballX, dy: ballY} = ball.getCoordinates()
+    const entities = layer.getEntities()
+    console.log(entities.length)
 
-    if (ballX + 30 * 2 > View.getLayers()[0].getWidth() || ballX <= 0) {
-      dx = -dx
+    // Loop through the entities
+    let ball
+    let i = 0
+    let n = entities.length
+
+    for (; i < n;) {
+      ball = entities[i++]
+
+      // Ball Control
+      let {dx: ballX, dy: ballY} = ball.getCoordinates()
+
+      if (ballX + ball.getWidth() > View.getLayers()[0].getWidth() || ballX <= 0) {
+        ball.vectorX = -ball.vectorX
+
+        if (entities.length < 2500) {
+          layer.addEntity(new Ball(30, 30))
+        }
+      }
+
+      if (ballY + ball.getHeight() > View.getLayers()[0].getHeight() || ballY <= 0) {
+        ball.vectorY = -ball.vectorY
+
+        if (entities.length < 2500) {
+          layer.addEntity(new Ball(30, 30))
+        }
+      }
+
+      ball.setCoordinates({
+        dx: ballX + ball.vectorX,
+        dy: ballY + ball.vectorY
+      })
     }
-
-    if (ballY + 30 * 2 > View.getLayers()[0].getHeight() || ballY <= 0) {
-      dy = -dy
-    }
-
-    ball.setCoordinates({
-      dx: ballX + dx,
-      dy: ballY + dy
-    })
   })
   .start()
 

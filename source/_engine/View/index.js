@@ -26,13 +26,18 @@ const layers = []
  * @return {Layer} The newly created Layer
  */
 View.createLayer = (elementId, width, height) => {
-  const layer = layers[layers.length] = new Layer(width, height)
+  let layer = layers[layers.length] = new Layer(width, height)
 
   return layer
 }
 
 View.createItem = ({draw = Function, coordinates: {dx, dy}, dimensions: {width, height}}) => {
-  return new Item(draw, dx, dy, width, height)
+  return new (class extends Item {
+    constructor (draw, dx, dy, width, height) {
+      super(dx, dy, width, height)
+      this.draw = draw
+    }
+  })(draw, dx, dy, width, height)
 }
 
 /**

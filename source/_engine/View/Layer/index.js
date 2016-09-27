@@ -11,9 +11,36 @@ class Layer {
     this._canvas = document.createElement('canvas')
     this._ctx = this._canvas.getContext('2d')
 
+    // Initialise the entities
+    this._entities = []
+
     // Resize the canvas and append it to the DOM
     this.resizeCanvas(width, height)
     document.body.appendChild(this._canvas)
+
+    // Add a loop task
+    loop.add(() => {
+      this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height)
+
+      let entity
+      let i = 0
+      let n = this._entities.length
+
+      for (; i < n;) {
+        entity = this._entities[i++]
+
+        // Clear the relevant part of the layer and redraw the component
+        const canvas = entity.getContext().canvas
+        const {dx: entityX, dy: entityY} = entity.getCoordinates()
+
+        // Draw a boundry box if in debug mode
+        if (config.debugEnabled) {
+          entity._ctx.strokeRect(0, 0, canvas.width, canvas.height)
+        }
+
+        this._ctx.drawImage(canvas, entityX, entityY)
+      }
+    })
   }
 
   /**
@@ -53,27 +80,25 @@ class Layer {
     return this._canvas.height
   }
 
-  addEntity (entity, dx = 0, dy = 0) {
+  addEntity (entity) {
     // Ensure that the entity is valid
     if (!(entity instanceof Item)) {
       throw Error('Entities must be valid')
     }
 
-    loop.add(() => {
+    // Draw the entity if possible
+    if (entity.draw) {
       entity.draw(entity._ctx)
+    }
 
-      // Clear the relevant part of the layer and redraw the component
-      const canvas = entity.getContext().canvas
-      const {dx: entityX, dy: entityY} = entity.getCoordinates()
+    // Add the entities to the layer
+    this._entities[this._entities.length] = entity
 
-      // Draw a boundry box if in debug mode
-      if (config.debugEnabled) {
-        entity._ctx.strokeRect(0, 0, canvas.width, canvas.height)
-      }
+    return this
+  }
 
-      this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height)
-      this._ctx.drawImage(canvas, entityX, entityY)
-    })
+  getEntities () {
+    return this._entities
   }
 
   /**
