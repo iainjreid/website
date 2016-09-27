@@ -61,7 +61,7 @@ class Layer {
 
     loop.add(() => {
       entity.draw(entity._ctx)
-      this._ctx.drawImage(entity._ctx.canvas, dx, dy)
+      this._ctx.drawImage(entity.getCanvas(), entity.getDxCoordinate(), entity.getDyCoordinate())
     })
   }
 
