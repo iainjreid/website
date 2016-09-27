@@ -2,9 +2,9 @@
 
 const config = {}
 
-config.targetFps = 120
+config.targetFps = 80
 
-config.debugEnabled = true
+config.debugEnabled = false
 
 config.performanceFeedback = false
 

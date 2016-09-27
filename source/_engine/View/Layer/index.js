@@ -61,7 +61,18 @@ class Layer {
 
     loop.add(() => {
       entity.draw(entity._ctx)
-      this._ctx.drawImage(entity.getCanvas(), entity.getDxCoordinate(), entity.getDyCoordinate())
+
+      // Clear the relevant part of the layer and redraw the component
+      const canvas = entity.getContext().canvas
+      const {dx: entityX, dy: entityY} = entity.getCoordinates()
+
+      // Draw a boundry box if in debug mode
+      if (config.debugEnabled) {
+        entity._ctx.strokeRect(0, 0, canvas.width, canvas.height)
+      }
+
+      this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height)
+      this._ctx.drawImage(canvas, entityX, entityY)
     })
   }
 
@@ -70,11 +81,6 @@ class Layer {
    */
   clearCanvas () {
     this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height)
-
-    if (config.debugEnabled) {
-      // Draw a boundry box
-      this._ctx.strokeRect(0, 0, this._canvas.width, this._canvas.height)
-    }
   }
 
   /**
