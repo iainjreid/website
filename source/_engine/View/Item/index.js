@@ -1,7 +1,7 @@
 'use strict'
 
 class Item {
-  constructor ({methods = {}, draw = Function, dimensions: {width, height}}) {
+  constructor (draw, dx, dy, width, height) {
     this._canvas = document.createElement('canvas')
     this._ctx = this._canvas.getContext('2d')
 
@@ -9,7 +9,9 @@ class Item {
     this._canvas.width = this._width = width
     this._canvas.height = this._height = height
 
-    // Store a reference to the draw function
+    // Store a reference to the draw function and other metadata
+    this.dx = dx
+    this.dy = dy
     this.draw = draw
   }
 
@@ -30,6 +32,26 @@ class Item {
    */
   getContext () {
     return this._ctx
+  }
+
+  getCoordinates () {
+    return {
+      dx: this.dx,
+      dy: this.dy
+    }
+  }
+
+  setCoordinates ({dx, dy}) {
+    this.dx = dx
+    this.dy = dy
+  }
+
+  getDxCoordinate () {
+    return this.dx
+  }
+
+  getDyCoordinate () {
+    return this.dy
   }
 
   /**

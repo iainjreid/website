@@ -31,6 +31,10 @@ View.createLayer = (elementId, width, height) => {
   return layer
 }
 
+View.createItem = ({draw = Function, coordinates: {dx, dy}, dimensions: {width, height}}) => {
+  return new Item(draw, dx, dy, width, height)
+}
+
 /**
  * @description This method will return a reference to the Layer with the supplied unique identifier. If no Layer with
  *              the supplied unique identifier is found, then undefined will be returned.

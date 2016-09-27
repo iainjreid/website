@@ -2,26 +2,50 @@
 
 import { Platform, View } from './_engine'
 
+let dx = 2
+let dy = 2
+
+const ball = View.createItem({
+  draw: function (ctx) {
+    ctx.beginPath()
+    ctx.arc(30, 30, 30, Math.PI * 2, false)
+    ctx.fillStyle = '#FF0000'
+    ctx.fill()
+    ctx.closePath()
+  },
+  coordinates: {
+    dx: 10,
+    dy: 10
+  },
+  dimensions: {
+    width: 60,
+    height: 60
+  }
+})
+
 View
   .createLayer()
-  .addEntity(new View.Item({
-    methods: {
-      // No methods
-    },
-    draw: function (ctx) {
-      ctx.beginPath()
-      ctx.arc(30, 30, 30, Math.PI * 2, false)
-      ctx.fillStyle = '#FF0000'
-      ctx.fill()
-      ctx.closePath()
-    },
-    dimensions: {
-      width: 60,
-      height: 60
-    }
-  }))
+  .addEntity(ball)
 
-Platform.loop.start()
+Platform.loop
+  .add(() => {
+    // Ball Control
+    let {dx: ballX, dy: ballY} = ball.getCoordinates()
+
+    if (ballX + 30 * 2 > View.getLayers()[0].getWidth() || ballX <= 0) {
+      dx = -dx
+    }
+
+    if (ballY + 30 * 2 > View.getLayers()[0].getHeight() || ballY <= 0) {
+      dy = -dy
+    }
+
+    ball.setCoordinates({
+      dx: ballX + dx,
+      dy: ballY + dy
+    })
+  })
+  .start()
 
 // import { Game, Input, Util, View } from './engine'
 // import { ball } from './assets'
