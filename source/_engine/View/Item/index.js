@@ -71,6 +71,37 @@ class Item {
     this.dy = dy
   }
 
+  getCenterCoorindinates () {
+    return {
+      dx: this.dx + this._width / 2,
+      dy: this.dy + this._height / 2
+    }
+  }
+
+  getHorizontalCenterCoordinate () {
+    return this.dx + this._width / 2
+  }
+
+  getVerticalCenterCoordinate () {
+    return this.dy + this._height / 2
+  }
+
+  getMinHorizontalCoordinate () {
+    return this.dx
+  }
+
+  getMaxHorizontalCoordinate () {
+    return this.dx + this._width
+  }
+
+  getMinVerticalCoordinate () {
+    return this.dy
+  }
+
+  getMaxVerticalCoordinate () {
+    return this._dy + this._height
+  }
+
   /**
    * @description A getter to return the Item class function.
    *
