@@ -4,24 +4,25 @@ import { Platform, View } from './_engine'
 
 class Ball extends View.Item {
   constructor (dx, dy) {
-    super(dx, dy, 60, 60)
+    super(dx, dy, 30, 30)
 
-    this.vectorX = 2
-    this.vectorY = 2
+    this.vectorX = randomNumberBetween(1, 9)
+    this.vectorY = randomNumberBetween(1, 9)
   }
 
   draw (ctx) {
     ctx.beginPath()
-    ctx.arc(30, 30, 30, Math.PI * 2, false)
+    ctx.arc(15, 15, 15, Math.PI * 2, false)
     ctx.fillStyle = '#FF0000'
     ctx.fill()
     ctx.closePath()
   }
 }
 
+const originBall = new Ball(randomNumberBetween(60, window.innerWidth - 60), randomNumberBetween(60, window.innerHeight - 60))
 const layer = View
   .createLayer()
-  .addEntity(new Ball(30, 30))
+  .addEntity(originBall)
 
 Platform.loop
   .add(() => {
@@ -42,16 +43,16 @@ Platform.loop
       if (ballX + ball.getWidth() > View.getLayers()[0].getWidth() || ballX <= 0) {
         ball.vectorX = -ball.vectorX
 
-        if (entities.length < 2500) {
-          layer.addEntity(new Ball(30, 30))
+        if (entities.length < 200) {
+          layer.addEntity(new Ball(randomNumberBetween(60, window.innerWidth - 60), randomNumberBetween(60, window.innerHeight - 60), originBall.getCanvas()))
         }
       }
 
       if (ballY + ball.getHeight() > View.getLayers()[0].getHeight() || ballY <= 0) {
         ball.vectorY = -ball.vectorY
 
-        if (entities.length < 2500) {
-          layer.addEntity(new Ball(30, 30))
+        if (entities.length < 200) {
+          layer.addEntity(new Ball(randomNumberBetween(60, window.innerWidth - 60), randomNumberBetween(60, window.innerHeight - 60), originBall.getCanvas()))
         }
       }
 
@@ -62,6 +63,10 @@ Platform.loop
     }
   })
   .start()
+
+function randomNumberBetween (a, b) {
+  return Math.floor(Math.random() * (b - a + 1) + a)
+}
 
 // import { Game, Input, Util, View } from './engine'
 // import { ball } from './assets'
