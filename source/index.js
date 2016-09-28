@@ -4,22 +4,26 @@ import { Platform, View } from './_engine'
 
 class Ball extends View.Item {
   constructor (dx, dy) {
-    super(dx, dy, 30, 30)
+    super(dx, dy, 12, 12)
 
     this.vectorX = randomNumberBetween(1, 9)
     this.vectorY = randomNumberBetween(1, 9)
   }
 
+  get directionalMagnitude () {
+    return Math.sqrt(this.vectorX ^ 2 + this.vectorY ^ 2)
+  }
+
   draw (ctx) {
     ctx.beginPath()
-    ctx.arc(15, 15, 15, Math.PI * 2, false)
+    ctx.arc(6, 6, 6, Math.PI * 2, false)
     ctx.fillStyle = '#FF0000'
     ctx.fill()
     ctx.closePath()
   }
 }
 
-const originBall = new Ball(randomNumberBetween(60, window.innerWidth - 60), randomNumberBetween(60, window.innerHeight - 60))
+const originBall = new Ball(randomX(), randomY())
 const layer = View
   .createLayer()
   .addEntity(originBall)
@@ -27,7 +31,6 @@ const layer = View
 Platform.loop
   .add(() => {
     const entities = layer.getEntities()
-    console.log(entities.length)
 
     // Loop through the entities
     let ball
@@ -43,16 +46,16 @@ Platform.loop
       if (ballX + ball.getWidth() > View.getLayers()[0].getWidth() || ballX <= 0) {
         ball.vectorX = -ball.vectorX
 
-        if (entities.length < 200) {
-          layer.addEntity(new Ball(randomNumberBetween(60, window.innerWidth - 60), randomNumberBetween(60, window.innerHeight - 60), originBall.getCanvas()))
+        if (entities.length < 15) {
+          layer.addEntity(new Ball(randomX(), randomY(), originBall.getCanvas()))
         }
       }
 
       if (ballY + ball.getHeight() > View.getLayers()[0].getHeight() || ballY <= 0) {
         ball.vectorY = -ball.vectorY
 
-        if (entities.length < 200) {
-          layer.addEntity(new Ball(randomNumberBetween(60, window.innerWidth - 60), randomNumberBetween(60, window.innerHeight - 60), originBall.getCanvas()))
+        if (entities.length < 15) {
+          layer.addEntity(new Ball(randomX(), randomY(), originBall.getCanvas()))
         }
       }
 
@@ -63,6 +66,14 @@ Platform.loop
     }
   })
   .start()
+
+function randomX () {
+  return randomNumberBetween(100, window.innerWidth - 100)
+}
+
+function randomY () {
+  return randomNumberBetween(100, window.innerHeight - 100)
+}
 
 function randomNumberBetween (a, b) {
   return Math.floor(Math.random() * (b - a + 1) + a)
