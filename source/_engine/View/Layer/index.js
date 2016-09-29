@@ -101,6 +101,10 @@ class Layer {
     return this._entities
   }
 
+  getCollisions () {
+    // Todo
+  }
+
   /**
    * @description This method will completely clear the canvas.
    */

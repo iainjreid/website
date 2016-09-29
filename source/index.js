@@ -28,10 +28,10 @@ window.addEventListener('resize', () => {
   const ball1 = new Ball(60, window.innerHeight / 2, 'red')
   const ball2 = new Ball(window.innerWidth - 60, window.innerHeight / 2, 'blue')
 
-  ball1.vectorX = 4
-  ball1.vectorY = 0
-  ball2.vectorX = -4
-  ball2.vectorY = 0
+  ball1.vectorX = 2
+  ball1.vectorY = 2
+  ball2.vectorX = -2
+  ball2.vectorY = -2
 
   const layer = View
     .createLayer()
@@ -42,17 +42,14 @@ window.addEventListener('resize', () => {
     .add(() => {
       // Collision checking
       if (ball1.getMaxHorizontalCoordinate() >= ball2.getMinHorizontalCoordinate()) {
-        const collisionCoordinates = {
-          dx: ball1.getMaxHorizontalCoordinate(),
-          dy: ball1.getVerticalCenterCoordinate()
-        }
+        const collisionCoordinates = getCentreBetweenTwoPoints(ball1.getCenterCoorindinates(), ball2.getCenterCoorindinates())
 
         const ball1CenterCoordinates = ball1.getCenterCoorindinates()
 
         console.log(getAngleBetweenThreePoints(...[
-          [ball1CenterCoordinates.dx + ball1.vectorX, ball1CenterCoordinates.dy + ball1.vectorY],
-          [ball1CenterCoordinates.dx, ball1CenterCoordinates.dy],
-          [collisionCoordinates.dx, collisionCoordinates.dy]
+          { dx: ball1CenterCoordinates.dx + ball1.vectorX, dy: ball1CenterCoordinates.dy + ball1.vectorY },
+          ball1CenterCoordinates,
+          collisionCoordinates
         ]))
 
         throw Error
@@ -114,7 +111,7 @@ function getDotProduct (a, b) {
   let i = a.length
 
   while (i) {
-    v += -a[--i] * b[i]
+    v += a[--i] * b[i]
   }
 
   return v
@@ -125,10 +122,17 @@ function getLengthBetweenTwoPoints (a, b) {
 }
 
 function getAngleBetweenThreePoints (a, b, c) {
-  const ab = [b[0] - a[0], b[1] - a[1]]
-  const bc = [c[0] - b[0], c[1] - b[1]]
+  const ab = [b.dx - a.dx, b.dy - a.dy]
+  const bc = [c.dx - b.dx, c.dy - b.dy]
 
-  return Math.acos(getDotProduct(ab, bc) / (getLengthBetweenTwoPoints(...ab) * getLengthBetweenTwoPoints(...bc)))
+  return Math.acos(-getDotProduct(ab, bc) / (getLengthBetweenTwoPoints(...ab) * getLengthBetweenTwoPoints(...bc)))
+}
+
+function getCentreBetweenTwoPoints (a, b) {
+  return {
+    dx: (a.dx + b.dx) / 2,
+    dy: (a.dy + b.dy) / 2
+  }
 }
 
 // import { Game, Input, Util, View } from './engine'
