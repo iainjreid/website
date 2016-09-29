@@ -41,7 +41,7 @@ window.addEventListener('resize', () => {
   Platform.loop
     .add(() => {
       // Collision checking
-      if (ball1.getMaxHorizontalCoordinate() === ball2.getMinHorizontalCoordinate()) {
+      if (ball1.getMaxHorizontalCoordinate() >= ball2.getMinHorizontalCoordinate()) {
         const collisionCoordinates = {
           dx: ball1.getMaxHorizontalCoordinate(),
           dy: ball1.getVerticalCenterCoordinate()
@@ -54,6 +54,8 @@ window.addEventListener('resize', () => {
           [ball1CenterCoordinates.dx, ball1CenterCoordinates.dy],
           [collisionCoordinates.dx, collisionCoordinates.dy]
         ]))
+
+        throw Error
       }
     })
     .add(() => {
@@ -112,7 +114,7 @@ function getDotProduct (a, b) {
   let i = a.length
 
   while (i) {
-    v += a[--i] * b[i]
+    v += -a[--i] * b[i]
   }
 
   return v
