@@ -2,6 +2,7 @@
 
 const utils = {}
 let uid = 0
+const letters = '0123456789ABCDEF'
 
 /**
  * @description This method will return a unique string.
@@ -22,6 +23,14 @@ utils.randomY = () => {
 
 utils.randomNumberBetween = (a, b) => {
   return Math.floor(Math.random() * (b - a + 1) + a)
+}
+
+utils.randomColorHex = () => {
+  let color = '#'
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)]
+  }
+  return color
 }
 
 utils.getDotProduct = (a, b) => {

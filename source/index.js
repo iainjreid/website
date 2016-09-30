@@ -3,12 +3,15 @@
 import { Platform, View } from './_engine'
 
 class Ball extends View.Item {
-  constructor (dx, dy, color) {
-    super(dx, dy, 12, 12)
+  constructor (color) {
+    // Set a random position
+    super(Platform.utils.randomNumberBetween(60, window.innerWidth + 60), Platform.utils.randomNumberBetween(60, window.innerHeight + 60), 12, 12)
 
     this.color = color
-    this.vectorX = Platform.utils.randomNumberBetween(1, 9)
-    this.vectorY = Platform.utils.randomNumberBetween(1, 9)
+
+    // Set a random trajectory
+    this.vectorX = Platform.utils.randomNumberBetween(-9, 9)
+    this.vectorY = Platform.utils.randomNumberBetween(-9, 9)
   }
 
   get directionalMagnitude () {
@@ -25,13 +28,11 @@ class Ball extends View.Item {
 }
 
 window.addEventListener('resize', () => {
-  const ball1 = new Ball(60, window.innerHeight / 2, 'red')
-  const ball2 = new Ball(window.innerWidth - 60, window.innerHeight / 2, 'blue')
+  const layer = View.createLayer()
 
-  const layer = View
-    .createLayer()
-    .addEntity(ball1)
-    .addEntity(ball2)
+  for (let i = 0; i < 100; i++) {
+    layer.addEntity(new Ball(Platform.utils.randomColorHex()))
+  }
 
   Platform.loop
     .add(() => {
@@ -39,8 +40,6 @@ window.addEventListener('resize', () => {
       const collisions = layer.getCollisions()
 
       if (collisions.length) {
-        console.log(collisions)
-
         // const collisionCoordinates = Platform.utils.getCentreBetweenTwoPoints(ball1.getCenterCoorindinates(), ball2.getCenterCoorindinates())
 
         // const ball1CenterCoordinates = ball1.getCenterCoorindinates()
@@ -52,8 +51,15 @@ window.addEventListener('resize', () => {
         // ]))
 
         for (let i = 0, n = collisions.length; i < n; i++) {
-          collisions[i][0].vectorX = [collisions[i][1].vectorX, collisions[i][1].vectorX = collisions[i][0].vectorX][0]
-          collisions[i][0].vectorY = [collisions[i][1].vectorY, collisions[i][1].vectorY = collisions[i][0].vectorY][0]
+          collisions[i][0].vectorX = [
+            collisions[i][1].vectorX,
+            collisions[i][1].vectorX = collisions[i][0].vectorX
+          ][0]
+
+          collisions[i][0].vectorY = [
+            collisions[i][1].vectorY,
+            collisions[i][1].vectorY = collisions[i][0].vectorY
+          ][0]
         }
       }
     })
