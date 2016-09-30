@@ -4,6 +4,7 @@
 import { Item } from '../Item'
 import { config } from '../../Platform/config'
 import { loop } from '../../Platform/loop'
+import { utils } from '../../Platform/utils'
 
 class Layer {
   constructor (width, height) {
@@ -102,7 +103,27 @@ class Layer {
   }
 
   getCollisions () {
-    // Todo
+    const collisions = []
+
+    for (let i1 = 0, n = this._entities.length; i1 < n; i1++) {
+      for (let i2 = i1 + 1; i2 < n; i2++) {
+        const entity1 = this._entities[i1]
+        const entity2 = this._entities[i2]
+
+        const e1radius = entity1.getRadius()
+        const e2radius = entity2.getRadius()
+
+        const {dx: e1dx, dy: e1dy} = entity1.getCenterCoorindinates()
+        const {dx: e2dx, dy: e2dy} = entity2.getCenterCoorindinates()
+
+        if (utils.pythagoras(e2dx - e1dx, e2dy - e1dy) < e1radius + e2radius) {
+          console.log('collision')
+          collisions[collisions.length] = [entity1, entity2]
+        }
+      }
+    }
+
+    return collisions
   }
 
   /**

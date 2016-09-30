@@ -7,8 +7,8 @@ class Ball extends View.Item {
     super(dx, dy, 12, 12)
 
     this.color = color
-    this.vectorX = randomNumberBetween(1, 9)
-    this.vectorY = randomNumberBetween(1, 9)
+    this.vectorX = Platform.utils.randomNumberBetween(1, 9)
+    this.vectorY = Platform.utils.randomNumberBetween(1, 9)
   }
 
   get directionalMagnitude () {
@@ -28,11 +28,6 @@ window.addEventListener('resize', () => {
   const ball1 = new Ball(60, window.innerHeight / 2, 'red')
   const ball2 = new Ball(window.innerWidth - 60, window.innerHeight / 2, 'blue')
 
-  ball1.vectorX = 2
-  ball1.vectorY = 2
-  ball2.vectorX = -2
-  ball2.vectorY = -2
-
   const layer = View
     .createLayer()
     .addEntity(ball1)
@@ -41,18 +36,25 @@ window.addEventListener('resize', () => {
   Platform.loop
     .add(() => {
       // Collision checking
-      if (ball1.getMaxHorizontalCoordinate() >= ball2.getMinHorizontalCoordinate()) {
-        const collisionCoordinates = getCentreBetweenTwoPoints(ball1.getCenterCoorindinates(), ball2.getCenterCoorindinates())
+      const collisions = layer.getCollisions()
 
-        const ball1CenterCoordinates = ball1.getCenterCoorindinates()
+      if (collisions.length) {
+        console.log(collisions)
 
-        console.log(getAngleBetweenThreePoints(...[
-          { dx: ball1CenterCoordinates.dx + ball1.vectorX, dy: ball1CenterCoordinates.dy + ball1.vectorY },
-          ball1CenterCoordinates,
-          collisionCoordinates
-        ]))
+        // const collisionCoordinates = Platform.utils.getCentreBetweenTwoPoints(ball1.getCenterCoorindinates(), ball2.getCenterCoorindinates())
 
-        throw Error
+        // const ball1CenterCoordinates = ball1.getCenterCoorindinates()
+
+        // console.log(Platform.utils.getAngleBetweenThreePoints(...[
+        //   { dx: ball1CenterCoordinates.dx + ball1.vectorX, dy: ball1CenterCoordinates.dy + ball1.vectorY },
+        //   ball1CenterCoordinates,
+        //   collisionCoordinates
+        // ]))
+
+        for (let i = 0, n = collisions.length; i < n; i++) {
+          collisions[i][0].vectorX = [collisions[i][1].vectorX, collisions[i][1].vectorX = collisions[i][0].vectorX][0]
+          collisions[i][0].vectorY = [collisions[i][1].vectorY, collisions[i][1].vectorY = collisions[i][0].vectorY][0]
+        }
       }
     })
     .add(() => {
@@ -66,23 +68,15 @@ window.addEventListener('resize', () => {
       for (; i < n;) {
         ball = entities[i++]
 
-        // Ball Control
+        // Ball Controls
         let {dx: ballX, dy: ballY} = ball.getCoordinates()
 
         if (ballX + ball.getWidth() > View.getLayers()[0].getWidth() || ballX <= 0) {
           ball.vectorX = -ball.vectorX
-
-          // if (entities.length < 15) {
-          //   layer.addEntity(new Ball(randomX(), randomY(), originBall.getCanvas()))
-          // }
         }
 
         if (ballY + ball.getHeight() > View.getLayers()[0].getHeight() || ballY <= 0) {
           ball.vectorY = -ball.vectorY
-
-          // if (entities.length < 15) {
-          //   layer.addEntity(new Ball(randomX(), randomY(), originBall.getCanvas()))
-          // }
         }
 
         ball.setCoordinates({
@@ -93,47 +87,6 @@ window.addEventListener('resize', () => {
     })
     .start()
 })
-
-// function randomX () {
-//   return randomNumberBetween(100, window.innerWidth - 100)
-// }
-
-// function randomY () {
-//   return randomNumberBetween(100, window.innerHeight - 100)
-// }
-
-function randomNumberBetween (a, b) {
-  return Math.floor(Math.random() * (b - a + 1) + a)
-}
-
-function getDotProduct (a, b) {
-  let v = 0
-  let i = a.length
-
-  while (i) {
-    v += a[--i] * b[i]
-  }
-
-  return v
-}
-
-function getLengthBetweenTwoPoints (a, b) {
-  return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2))
-}
-
-function getAngleBetweenThreePoints (a, b, c) {
-  const ab = [b.dx - a.dx, b.dy - a.dy]
-  const bc = [c.dx - b.dx, c.dy - b.dy]
-
-  return Math.acos(-getDotProduct(ab, bc) / (getLengthBetweenTwoPoints(...ab) * getLengthBetweenTwoPoints(...bc)))
-}
-
-function getCentreBetweenTwoPoints (a, b) {
-  return {
-    dx: (a.dx + b.dx) / 2,
-    dy: (a.dy + b.dy) / 2
-  }
-}
 
 // import { Game, Input, Util, View } from './engine'
 // import { ball } from './assets'
