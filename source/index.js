@@ -3,15 +3,15 @@
 import { Platform, View } from './_engine'
 
 class Ball extends View.Item {
-  constructor (color) {
+  constructor (color = Platform.utils.randomColorHex()) {
     // Set a random position
     super(Platform.utils.randomNumberBetween(60, window.innerWidth + 60), Platform.utils.randomNumberBetween(60, window.innerHeight + 60), 12, 12)
 
     this.color = color
 
     // Set a random trajectory
-    this.vectorX = Platform.utils.randomNumberBetween(-9, 9)
-    this.vectorY = Platform.utils.randomNumberBetween(-9, 9)
+    this.vectorX = Platform.utils.randomNumberBetween(-5, 5)
+    this.vectorY = Platform.utils.randomNumberBetween(-5, 5)
   }
 
   get directionalMagnitude () {
@@ -29,9 +29,8 @@ class Ball extends View.Item {
 
 window.addEventListener('resize', () => {
   const layer = View.createLayer()
-
-  for (let i = 0; i < 100; i++) {
-    layer.addEntity(new Ball(Platform.utils.randomColorHex()))
+  for (let i = 0; i <= 10; i++) {
+    layer.addEntity(new Ball())
   }
 
   Platform.loop
@@ -40,26 +39,35 @@ window.addEventListener('resize', () => {
       const collisions = layer.getCollisions()
 
       if (collisions.length) {
-        // const collisionCoordinates = Platform.utils.getCentreBetweenTwoPoints(ball1.getCenterCoorindinates(), ball2.getCenterCoorindinates())
-
-        // const ball1CenterCoordinates = ball1.getCenterCoorindinates()
-
-        // console.log(Platform.utils.getAngleBetweenThreePoints(...[
-        //   { dx: ball1CenterCoordinates.dx + ball1.vectorX, dy: ball1CenterCoordinates.dy + ball1.vectorY },
-        //   ball1CenterCoordinates,
-        //   collisionCoordinates
-        // ]))
-
         for (let i = 0, n = collisions.length; i < n; i++) {
-          collisions[i][0].vectorX = [
-            collisions[i][1].vectorX,
-            collisions[i][1].vectorX = collisions[i][0].vectorX
-          ][0]
+          const [ball1, ball2] = collisions[i]
+          const ball1CenterCoordinates = ball1.getCenterCoorindinates()
+          const ball2CenterCoordinates = ball2.getCenterCoorindinates()
+          const collisionCoordinates = Platform.utils.getCenterBetweenTwoPoints(ball1CenterCoordinates, ball2CenterCoordinates)
 
-          collisions[i][0].vectorY = [
-            collisions[i][1].vectorY,
-            collisions[i][1].vectorY = collisions[i][0].vectorY
-          ][0]
+          const ball1angleOfCollision = Platform.utils.radiansToDegrees(Platform.utils.getAngleBetweenThreePoints(...[
+            { dx: ball1CenterCoordinates.dx + ball1.vectorX, dy: ball1CenterCoordinates.dy + ball1.vectorY },
+            ball1CenterCoordinates,
+            collisionCoordinates
+          ]))
+          const ball2angleOfCollision = Platform.utils.radiansToDegrees(Platform.utils.getAngleBetweenThreePoints(...[
+            { dx: ball2CenterCoordinates.dx + ball2.vectorX, dy: ball2CenterCoordinates.dy + ball2.vectorY },
+            ball2CenterCoordinates,
+            collisionCoordinates
+          ]))
+
+          const ball1ForceAtAngle = ball1.directionalMagnitude * (90 - ball1angleOfCollision) / 90
+          const ball2ForceAtAngle = ball2.directionalMagnitude * (90 - ball2angleOfCollision) / 90
+
+          const ball1VectorXTransfer = Math.cos(ball1angleOfCollision) * ball1ForceAtAngle
+          const ball1VectorYTransfer = Math.sin(ball1angleOfCollision) * ball1ForceAtAngle
+          const ball2VectorXTransfer = Math.cos(ball2angleOfCollision) * ball2ForceAtAngle
+          const ball2VectorYTransfer = Math.sin(ball2angleOfCollision) * ball2ForceAtAngle
+
+          ball1.vectorX += ball1VectorXTransfer
+          ball1.vectorY += ball1VectorYTransfer
+          ball2.vectorX += ball2VectorXTransfer
+          ball2.vectorY += ball2VectorYTransfer
         }
       }
     })
@@ -77,11 +85,11 @@ window.addEventListener('resize', () => {
         // Ball Controls
         let {dx: ballX, dy: ballY} = ball.getCoordinates()
 
-        if (ballX + ball.getWidth() > View.getLayers()[0].getWidth() || ballX <= 0) {
+        if (ballX + ball.vectorX + ball.getWidth() > View.getLayers()[0].getWidth() || ballX + ball.vectorX <= 0) {
           ball.vectorX = -ball.vectorX
         }
 
-        if (ballY + ball.getHeight() > View.getLayers()[0].getHeight() || ballY <= 0) {
+        if (ballY + ball.vectorY + ball.getHeight() > View.getLayers()[0].getHeight() || ballY + ball.vectorY <= 0) {
           ball.vectorY = -ball.vectorY
         }
 

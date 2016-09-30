@@ -55,11 +55,19 @@ utils.getAngleBetweenThreePoints = (a, b, c) => {
   return Math.acos(-utils.getDotProduct(ab, bc) / (utils.pythagoras(...ab) * utils.pythagoras(...bc)))
 }
 
-utils.getCentreBetweenTwoPoints = (a, b) => {
+utils.getCenterBetweenTwoPoints = (a, b) => {
   return {
     dx: (a.dx + b.dx) / 2,
     dy: (a.dy + b.dy) / 2
   }
+}
+
+utils.degreesToRadians = (degrees) => {
+  return degrees * Math.PI / 180
+}
+
+utils.radiansToDegrees = (radians) => {
+  return radians * 180 / Math.PI
 }
 
 export { utils }
