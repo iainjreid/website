@@ -1,5 +1,8 @@
 'use strict'
 
+// Properties
+import { collisions } from './properties/collisions'
+
 class Item {
   constructor (dx, dy, width, height, canvas) {
     this._canvas = canvas || document.createElement('canvas')
@@ -75,7 +78,7 @@ class Item {
     this.dy = dy
   }
 
-  getCenterCoorindinates () {
+  getCenterCoordinates () {
     return {
       dx: this.dx + this._width / 2,
       dy: this.dy + this._height / 2
@@ -113,6 +116,10 @@ class Item {
    */
   get Class () {
     return Item
+  }
+
+  static get collisions () {
+    return collisions
   }
 }
 

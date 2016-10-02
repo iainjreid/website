@@ -113,8 +113,8 @@ class Layer {
         const e1radius = entity1.getRadius()
         const e2radius = entity2.getRadius()
 
-        const {dx: e1dx, dy: e1dy} = entity1.getCenterCoorindinates()
-        const {dx: e2dx, dy: e2dy} = entity2.getCenterCoorindinates()
+        const {dx: e1dx, dy: e1dy} = entity1.getCenterCoordinates()
+        const {dx: e2dx, dy: e2dy} = entity2.getCenterCoordinates()
 
         if (utils.pythagoras(e2dx - e1dx, e2dy - e1dy) < e1radius + e2radius) {
           collisions[collisions.length] = [entity1, entity2]
