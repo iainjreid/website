@@ -1,6 +1,6 @@
 'use strict'
 
-import { Platform, View } from './_engine'
+import { Platform, View } from './engine'
 
 class Ball extends View.Item {
   constructor (color = Platform.utils.randomColorHex()) {
