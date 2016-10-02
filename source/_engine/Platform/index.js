@@ -2,6 +2,7 @@
 
 // Dependencies
 import { config } from './config'
+import { input } from './input'
 import { loop } from './loop'
 import { utils } from './utils'
 
@@ -15,6 +16,7 @@ import { utils } from './utils'
 const Platform = {}
 
 Platform.config = config
+Platform.input = input
 Platform.loop = loop
 Platform.utils = utils
 
