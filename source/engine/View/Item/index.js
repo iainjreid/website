@@ -118,6 +118,17 @@ class Item {
     return Item
   }
 
+  static with (...properties) {
+    return properties.reduce((superclass, property) => {
+      // Ensure that the property is avaiable on this class if the property is supplied as a string
+      if (!Item[property]) {
+        throw Error('Property not found on class')
+      }
+
+      return Item[property](superclass)
+    }, this)
+  }
+
   static get collisions () {
     return collisions
   }
