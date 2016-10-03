@@ -1,7 +1,7 @@
 'use strict'
 
 // Properties
-import { collisions } from './properties/collisions'
+import { vectors } from './properties/vectors'
 
 class Item {
   constructor (dx, dy, width, height, canvas) {
@@ -129,8 +129,8 @@ class Item {
     }, this)
   }
 
-  static get collisions () {
-    return collisions
+  static get vectors () {
+    return vectors
   }
 }
 

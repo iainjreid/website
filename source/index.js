@@ -2,10 +2,10 @@
 
 import { Platform, View } from './engine'
 
-class Ball extends View.Item.with('collisions') {
+class Ball extends View.Item.with('vectors') {
   constructor (color = Platform.utils.randomColorHex()) {
     // Set a random position
-    super(Platform.utils.randomNumberBetween(60, window.innerWidth + 60), Platform.utils.randomNumberBetween(60, window.innerHeight + 60), 12, 12)
+    super(Platform.utils.randomNumberBetween(60, window.innerWidth - 60), Platform.utils.randomNumberBetween(60, window.innerHeight - 60), 12, 12)
 
     this.color = color
 
@@ -65,6 +65,8 @@ Platform.loop
 
       item1.vectorX = [item2.vectorX, item2.vectorX = item1.vectorX][0]
       item1.vectorY = [item2.vectorY, item2.vectorY = item1.vectorY][0]
+
+      console.log(item1['vector.get']())
 
       // // Retrieve the item center coordinates
       // const item1CenterCoordinates = item1.getCenterCoordinates()
@@ -157,9 +159,9 @@ Platform.loop
   })
   .add(() => {
     // Calculate total energy
-    const totalEnergy = layer.getEntities().reduce((a, b) => a + b.directionalMagnitude, 0)
+    // const totalEnergy = layer.getEntities().reduce((a, b) => a + b.directionalMagnitude, 0)
 
-    console.log(totalEnergy)
+    // console.log(totalEnergy)
   })
   .start()
 // })
