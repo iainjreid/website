@@ -156,22 +156,10 @@ Platform.loop
     }
   })
   .add(() => {
-    const entities = layer.getEntities()
-    let energy = 0
+    // Calculate total energy
+    const totalEnergy = layer.getEntities().reduce((a, b) => a + b.directionalMagnitude, 0)
 
-    // Loop through the entities
-    let ball
-    let i = 0
-    let n = entities.length
-
-    for (; i < n;) {
-      ball = entities[i++]
-
-      // Calculate total energy
-      energy += ball.directionalMagnitude
-    }
-
-    console.log(energy)
+    console.log(totalEnergy)
   })
   .start()
 // })
