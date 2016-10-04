@@ -46,10 +46,6 @@ class Item {
     return this._height
   }
 
-  getRadius () {
-    return this._width / 2
-  }
-
   getCoordinates () {
     return {
       dx: this.dx,

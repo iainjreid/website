@@ -66,8 +66,6 @@ Platform.loop
       item1.vectorX = [item2.vectorX, item2.vectorX = item1.vectorX][0]
       item1.vectorY = [item2.vectorY, item2.vectorY = item1.vectorY][0]
 
-      console.log(item1['vector.get']())
-
       // // Retrieve the item center coordinates
       // const item1CenterCoordinates = item1.getCenterCoordinates()
       // const item2CenterCoordinates = item2.getCenterCoordinates()
