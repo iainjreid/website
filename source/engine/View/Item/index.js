@@ -4,13 +4,15 @@
 import { vectors } from './properties/vectors'
 
 class Item {
-  constructor (dx, dy, width, height) {
+  constructor (dx, dy, width, height, canvas) {
     this._canvas = canvas || document.createElement('canvas')
     this._ctx = this._canvas.getContext('2d')
 
     // Set the canvas width and height
-    this._canvas.width = width
-    this._canvas.height = height
+    if (!canvas) {
+      this._canvas.width = width
+      this._canvas.height = height
+    }
 
     // Store a reference to the draw function and other metadata
     this.dx = dx
@@ -90,17 +92,17 @@ class Item {
 
   getCenterCoordinates () {
     return {
-      dx: this.dx + this._width / 2,
-      dy: this.dy + this._height / 2
+      dx: this.dx + this._canvas.width / 2,
+      dy: this.dy + this._canvas.height / 2
     }
   }
 
   getHorizontalCenterCoordinate () {
-    return this.dx + this._width / 2
+    return this.dx + this._canvas.width / 2
   }
 
   getVerticalCenterCoordinate () {
-    return this.dy + this._height / 2
+    return this.dy + this._canvas.height / 2
   }
 
   getMinHorizontalCoordinate () {
@@ -108,7 +110,7 @@ class Item {
   }
 
   getMaxHorizontalCoordinate () {
-    return this.dx + this._width
+    return this.dx + this._canvas.width
   }
 
   getMinVerticalCoordinate () {
@@ -116,7 +118,7 @@ class Item {
   }
 
   getMaxVerticalCoordinate () {
-    return this._dy + this._height
+    return this._dy + this._canvas.height
   }
 
   /**

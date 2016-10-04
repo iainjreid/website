@@ -110,8 +110,8 @@ class Layer {
         const entity1 = this._entities[i1]
         const entity2 = this._entities[i2]
 
-        const e1radius = entity1.getRadius()
-        const e2radius = entity2.getRadius()
+        const e1radius = entity1.getWidth() / 2
+        const e2radius = entity2.getWidth() / 2
 
         const {dx: e1dx, dy: e1dy} = entity1.getCenterCoordinates()
         const {dx: e2dx, dy: e2dy} = entity2.getCenterCoordinates()

@@ -61,10 +61,10 @@ Platform.loop
 
     for (let i = 0, n = collisions.length; i < n; i++) {
       // Determine which item has the greater magnitude
-      const [item1, item2] = collisions[i].sort((a, b) => a.directionalMagnitude < b.directionalMagnitude)
+      const [item1, item2] = collisions[i].sort((a, b) => a.getVectorMagnitude() < b.getVectorMagnitude())
 
-      item1.vectorX = [item2.vectorX, item2.vectorX = item1.vectorX][0]
-      item1.vectorY = [item2.vectorY, item2.vectorY = item1.vectorY][0]
+      item1.setVectorX([item2.getVectorX(), item2.setVectorX(item1.getVectorX())][0])
+      item1.setVectorY([item2.getVectorY(), item2.setVectorY(item1.getVectorY())][0])
 
       // // Retrieve the item center coordinates
       // const item1CenterCoordinates = item1.getCenterCoordinates()
@@ -141,17 +141,17 @@ Platform.loop
       // Ball Controls
       let {dx: ballX, dy: ballY} = ball.getCoordinates()
 
-      if (ballX + ball.vectorX + ball.getWidth() > View.getLayers()[0].getWidth() || ballX + ball.vectorX <= 0) {
-        ball.vectorX = -ball.vectorX
+      if (ballX + ball.getVectorX() + ball.getWidth() > View.getLayers()[0].getWidth() || ballX + ball.getVectorX() <= 0) {
+        ball.setVectorX(-ball.getVectorX())
       }
 
-      if (ballY + ball.vectorY + ball.getHeight() > View.getLayers()[0].getHeight() || ballY + ball.vectorY <= 0) {
-        ball.vectorY = -ball.vectorY
+      if (ballY + ball.getVectorY() + ball.getHeight() > View.getLayers()[0].getHeight() || ballY + ball.getVectorY() <= 0) {
+        ball.setVectorY(-ball.getVectorY())
       }
 
       ball.setCoordinates({
-        dx: ballX + ball.vectorX,
-        dy: ballY + ball.vectorY
+        dx: ballX + ball.getVectorX(),
+        dy: ballY + ball.getVectorY()
       })
     }
   })
