@@ -4,15 +4,13 @@
 import { vectors } from './properties/vectors'
 
 class Item {
-  constructor (dx, dy, width, height, canvas) {
+  constructor (dx, dy, width, height) {
     this._canvas = canvas || document.createElement('canvas')
     this._ctx = this._canvas.getContext('2d')
 
     // Set the canvas width and height
-    if (!canvas) {
-      this._canvas.width = this._width = width
-      this._canvas.height = this._height = height
-    }
+    this._canvas.width = width
+    this._canvas.height = height
 
     // Store a reference to the draw function and other metadata
     this.dx = dx
@@ -20,9 +18,9 @@ class Item {
   }
 
   /**
-   * @description This method will return a reference to the canvas element belonging to the Entity.
+   * @description This method will return a reference to the canvas element belonging to the Item.
    *
-   * @return {Object} The canvas belonging to the Entity
+   * @return {Object} The canvas belonging to the Item
    */
   getCanvas () {
     return this._canvas
@@ -30,22 +28,31 @@ class Item {
 
   /**
    * @description This method will return a reference to the context derived from the canvas element belonging to the
-   *              Entity.
+   *              Item.
    *
-   * @return {Object} The canvas context belonging to this Entity
+   * @return {Object} The canvas context belonging to this Item
    */
   getContext () {
     return this._ctx
   }
 
+  /**
+   * @return {Number} The width of the canvas object
+   */
   getWidth () {
-    return this._width
+    return this._canvas.width
   }
 
+  /**
+   * @return {Number} The height of the canvas object
+   */
   getHeight () {
-    return this._height
+    return this._canvas.height
   }
 
+  /**
+   * @return {Object} The true coordinates of the Item
+   */
   getCoordinates () {
     return {
       dx: this.dx,
@@ -53,6 +60,13 @@ class Item {
     }
   }
 
+  /**
+   * @description This method will set the coordinates for the Item with the supplied values
+   *
+   * @param {Object} obj    - The new coordinates of the Item
+   * @param {Number} obj.dx - The new X coordinate to be used
+   * @param {Number} obj.dy - The new Y coordinate to be used
+   */
   setCoordinates ({dx, dy}) {
     this.dx = dx
     this.dy = dy
