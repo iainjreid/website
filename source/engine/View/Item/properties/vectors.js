@@ -37,6 +37,19 @@ function vectors (superclass) {
       this.vectorY = y
     }
 
+    reverseVector () {
+      this.vectorX = -this.vectorX
+      this.vectorY = -this.vectorY
+    }
+
+    reverseVectorX () {
+      this.vectorX = -this.vectorX
+    }
+
+    reverseVectorY () {
+      this.vectorY = -this.vectorY
+    }
+
     /**
      * @description This method will return the magnitude of the vector.
      *

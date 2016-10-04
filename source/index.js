@@ -142,11 +142,11 @@ Platform.loop
       let {dx: ballX, dy: ballY} = ball.getCoordinates()
 
       if (ballX + ball.getVectorX() + ball.getWidth() > View.getLayers()[0].getWidth() || ballX + ball.getVectorX() <= 0) {
-        ball.setVectorX(-ball.getVectorX())
+        ball.reverseVectorX()
       }
 
       if (ballY + ball.getVectorY() + ball.getHeight() > View.getLayers()[0].getHeight() || ballY + ball.getVectorY() <= 0) {
-        ball.setVectorY(-ball.getVectorY())
+        ball.reverseVectorY()
       }
 
       ball.setCoordinates({
