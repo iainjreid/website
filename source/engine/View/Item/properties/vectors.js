@@ -56,7 +56,7 @@ function vectors (superclass) {
 
       return Platform.utils.getAngleBetweenThreePoints({
         dx: itemCenterCoordinates.dx,
-        dy: itemCenterCoordinates.dy - 1
+        dy: itemCenterCoordinates.dy + 1
       }, itemCenterCoordinates, {
         dx: itemCenterCoordinates.dx + this.vectorX,
         dy: itemCenterCoordinates.dy + this.vectorY
