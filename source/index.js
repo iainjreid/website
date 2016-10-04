@@ -50,9 +50,11 @@ const layer = View.createLayer()
 // layer.addEntity(ball1)
 // layer.addEntity(ball2)
 
-for (let i = 0; i < 25; i++) {
-  layer.addEntity(new Ball())
-}
+setTimeout(() => {
+  for (let i = 0; i < 25; i++) {
+    layer.addEntity(new Ball())
+  }
+})
 
 Platform.loop
   .add(() => {
