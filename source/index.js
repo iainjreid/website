@@ -10,12 +10,8 @@ class Ball extends View.Item.with('vectors') {
     this.color = color
 
     // Set a random trajectory
-    this.vectorX = Platform.utils.randomNumberBetween(-5, 5)
-    this.vectorY = Platform.utils.randomNumberBetween(-5, 5)
-  }
-
-  get directionalMagnitude () {
-    return Math.sqrt(Math.pow(this.vectorX, 2) + Math.pow(this.vectorY, 2))
+    this.setVectorX(Platform.utils.randomNumberBetween(-5, 5))
+    this.setVectorY(Platform.utils.randomNumberBetween(-5, 5))
   }
 
   draw (ctx) {
@@ -27,28 +23,7 @@ class Ball extends View.Item.with('vectors') {
   }
 }
 
-// window.addEventListener('resize', () => {
 const layer = View.createLayer()
-
-// const ball1 = new Ball()
-// const ball2 = new Ball()
-
-// ball1.setCoordinates({
-//   dx: 100,
-//   dy: 200
-// })
-// ball2.setCoordinates({
-//   dx: 300,
-//   dy: 201
-// })
-
-// ball1.vectorX = 2
-// ball1.vectorY = 0
-// ball2.vectorX = -2
-// ball2.vectorY = 0
-
-// layer.addEntity(ball1)
-// layer.addEntity(ball2)
 
 setTimeout(() => {
   for (let i = 0; i < 25; i++) {
@@ -164,7 +139,6 @@ Platform.loop
     // console.log(totalEnergy)
   })
   .start()
-// })
 
 // import { Game, Input, Util, View } from './engine'
 // import { ball } from './assets'
