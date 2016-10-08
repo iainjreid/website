@@ -5,6 +5,22 @@ import { Platform } from '../../../Platform'
 
 function vectors (superclass) {
   return class Vectors extends superclass {
+    constructor () {
+      super(...arguments)
+
+      this.vectorX = 0
+      this.vectorY = 0
+
+      Platform.loop.add(() => {
+        const {dx: ballX, dy: ballY} = this.getCoordinates()
+
+        this.setCoordinates({
+          dx: ballX + this.vectorX,
+          dy: ballY + this.vectorY
+        })
+      })
+    }
+
     /**
      * @description This method will return the horizontal value of the Vector.
      *
