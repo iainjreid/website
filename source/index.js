@@ -40,8 +40,7 @@ Platform.loop
       // Determine which item has the greater magnitude
       const [item1, item2] = collisions[i].sort((a, b) => a.getVectorMagnitude() < b.getVectorMagnitude())
 
-      item1.setVectorX([item2.getVectorX(), item2.setVectorX(item1.getVectorX())][0])
-      item1.setVectorY([item2.getVectorY(), item2.setVectorY(item1.getVectorY())][0])
+      item1.reflectVector(item2)
 
       // // Retrieve the item center coordinates
       // const item1CenterCoordinates = item1.getCenterCoordinates()
