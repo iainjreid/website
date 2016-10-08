@@ -1,6 +1,7 @@
 'use strict'
 
 // Properties
+import { collisions } from './properties/collisions'
 import { vectors } from './properties/vectors'
 
 class Item {
@@ -139,6 +140,10 @@ class Item {
 
       return Item[property](superclass)
     }, this)
+  }
+
+  static get collisions () {
+    return collisions
   }
 
   static get vectors () {

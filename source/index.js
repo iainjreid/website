@@ -2,7 +2,7 @@
 
 import { Platform, View } from './engine'
 
-class Ball extends View.Item.with('vectors') {
+class Ball extends View.Item.with('vectors', 'collisions') {
   constructor (color = Platform.utils.randomColorHex()) {
     // Set a random position
     super(Platform.utils.randomNumberBetween(60, window.innerWidth - 60), Platform.utils.randomNumberBetween(60, window.innerHeight - 60), 12, 12)
@@ -124,11 +124,6 @@ Platform.loop
       if (ballY + ball.getVectorY() + ball.getHeight() > View.getLayers()[0].getHeight() || ballY + ball.getVectorY() <= 0) {
         ball.reverseVectorY()
       }
-
-      ball.setCoordinates({
-        dx: ballX + ball.getVectorX(),
-        dy: ballY + ball.getVectorY()
-      })
     }
   })
   .add(() => {
