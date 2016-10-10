@@ -3,11 +3,11 @@
 import { Platform, View } from './engine'
 
 class Ball extends View.Item.with('vectors', 'collisions') {
-  constructor (color = Platform.utils.randomColorHex()) {
+  constructor () {
     // Set a random position
     super(Platform.utils.randomNumberBetween(60, window.innerWidth - 60), Platform.utils.randomNumberBetween(60, window.innerHeight - 60), 12, 12)
 
-    this.color = color
+    this.color = Platform.utils.randomColorHex()
 
     // Set a random trajectory
     this.setVectorX(Platform.utils.randomNumberBetween(-5, 5))
@@ -26,7 +26,7 @@ class Ball extends View.Item.with('vectors', 'collisions') {
 const layer = View.createLayer()
 
 setTimeout(() => {
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < 50; i++) {
     layer.addEntity(new Ball())
   }
 })
@@ -36,9 +36,12 @@ Platform.loop
     // Collision checking
     const collisions = layer.getCollisions()
 
-    for (let i = 0, n = collisions.length; i < n; i++) {
+    let i = 0
+    let n = collisions.length
+
+    for (; i < n;) {
       // Determine which item has the greater magnitude
-      const [item1, item2] = collisions[i].sort((a, b) => a.getVectorMagnitude() < b.getVectorMagnitude())
+      const [item1, item2] = collisions[i++].sort((a, b) => a.getVectorMagnitude() < b.getVectorMagnitude())
 
       item1.reflectVector(item2)
 
@@ -116,21 +119,16 @@ Platform.loop
 
       // Ball Controls
       let {dx: ballX, dy: ballY} = ball.getCoordinates()
+      let [vectorX, vectorY] = [ball.getVectorX(), ball.getVectorY()]
 
-      if (ballX + ball.getVectorX() + ball.getWidth() > View.getLayers()[0].getWidth() || ballX + ball.getVectorX() <= 0) {
+      if (ballX + vectorX + ball.getWidth() > layer.getWidth() || ballX + vectorX <= 0) {
         ball.reverseVectorX()
       }
 
-      if (ballY + ball.getVectorY() + ball.getHeight() > View.getLayers()[0].getHeight() || ballY + ball.getVectorY() <= 0) {
+      if (ballY + vectorY + ball.getHeight() > layer.getHeight() || ballY + vectorY <= 0) {
         ball.reverseVectorY()
       }
     }
-  })
-  .add(() => {
-    // Calculate total energy
-    // const totalEnergy = layer.getEntities().reduce((a, b) => a + b.directionalMagnitude, 0)
-
-    // console.log(totalEnergy)
   })
   .start()
 
