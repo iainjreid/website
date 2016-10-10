@@ -2,7 +2,7 @@
 
 const config = {}
 
-config.targetFps = 80
+config.fpsCounter = true
 
 config.debugEnabled = false
 

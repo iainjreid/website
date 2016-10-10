@@ -9,6 +9,7 @@ import { config } from '../config'
 const loop = {}
 let tasks = []
 let shouldRun
+let fpsCounter = 0
 
 /**
  * @description This method will add the supplied function to the processing cycle.
@@ -78,9 +79,22 @@ function process () {
     console.log('Frame took %sms', t1 - t0)
   }
 
+  // FPS Counter
+  if (config.fpsCounter) {
+    fpsCounter++
+  }
+
   window.requestAnimationFrame(process)
 }
 
 window.onerror = loop.stop
+
+// FPS Counter
+if (config.fpsCounter) {
+  setInterval(() => {
+    console.debug('%s FPS', fpsCounter)
+    fpsCounter = 0
+  }, 1000)
+}
 
 export { loop }
