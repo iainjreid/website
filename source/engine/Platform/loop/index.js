@@ -18,13 +18,16 @@ let fpsCounter = 0
  *
  * @returns {Object} The loop object
  */
-loop.add = (fn) => {
+loop.add = (fn, priority = 60) => {
   // Ensure that a function has been provided
   if (typeof fn !== 'function') {
     throw Error('Only functions may be added to the loop')
   }
 
-  tasks.push(fn)
+  tasks.push({ fn, priority })
+
+  // Sort the task by priority
+  tasks.sort((a, b) => a.priority > b.priority)
 
   // Return the Loop object
   return loop
@@ -70,7 +73,7 @@ function process () {
   let n = tasks.length
 
   while (i < n) {
-    tasks[i++]()
+    tasks[i++].fn()
   }
 
   // Performance metrics
