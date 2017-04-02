@@ -1,7 +1,10 @@
 {
   "scripts": {
+    "prebuild": "npm run lint",
     "build": "webpack -p",
     "docs": "jsdoc source -d docs",
+    "lint": "eslint --fix source",
+    "prestart": "npm run lint",
     "start": "webpack-dev-server --host 0.0.0.0"
   },
   "devDependencies": {
