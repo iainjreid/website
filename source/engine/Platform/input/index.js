@@ -1,6 +1,6 @@
 'use strict'
 
-const input = {
+export const keyboard = {
   upArrow: false,
   downArrow: false,
   leftArrow: false,
@@ -11,19 +11,19 @@ document.addEventListener('keydown', e => {
   switch (e.keyCode) {
     case 38:
     case 87:
-      input.upArrow = true
+      keyboard.upArrow = true
       break
     case 40:
     case 83:
-      input.downArrow = true
+      keyboard.downArrow = true
       break
     case 37:
     case 65:
-      input.leftArrow = true
+      keyboard.leftArrow = true
       break
     case 39:
     case 68:
-      input.rightArrow = true
+      keyboard.rightArrow = true
       break
   }
 }, false)
@@ -32,21 +32,19 @@ document.addEventListener('keyup', e => {
   switch (e.keyCode) {
     case 38:
     case 87:
-      input.upArrow = false
+      keyboard.upArrow = false
       break
     case 40:
     case 83:
-      input.downArrow = false
+      keyboard.downArrow = false
       break
     case 37:
     case 65:
-      input.leftArrow = false
+      keyboard.leftArrow = false
       break
     case 39:
     case 68:
-      input.rightArrow = false
+      keyboard.rightArrow = false
       break
   }
 }, false)
-
-export { input }

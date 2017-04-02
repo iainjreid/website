@@ -5,7 +5,7 @@ import { Platform } from '../../../Platform'
 
 const updates = []
 
-function collisions (superclass) {
+export function collisions (superclass) {
   return class Collisions extends superclass {
     setCoordinates (coordinates) {
       updates.push({
@@ -26,5 +26,3 @@ Platform.loop.add(() => {
     update.tick(update.vector)
   }
 }, 100)
-
-export { collisions }

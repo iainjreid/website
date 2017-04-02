@@ -3,7 +3,7 @@
 // Dependencies
 import { Platform } from '../../../Platform'
 
-function vectors (superclass) {
+export function vectors (superclass) {
   return class Vectors extends superclass {
     constructor () {
       super(...arguments)
@@ -145,5 +145,3 @@ function vectors (superclass) {
     }
   }
 }
-
-export { vectors }

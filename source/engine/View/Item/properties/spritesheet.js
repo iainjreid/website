@@ -7,7 +7,7 @@ import { Platform } from '../../Platform'
 import { Layer } from '../../View/Layer'
 import { Base } from './base'
 
-class GameSprite extends Base {
+export class Sprite extends Base {
   constructor (spritesheet, width, height, frames) {
     super()
 
@@ -59,5 +59,3 @@ class GameSprite extends Base {
     ]
   }
 }
-
-export { GameSprite as Sprite }

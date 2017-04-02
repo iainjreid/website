@@ -1,10 +1,10 @@
 'use strict'
 
 // Dependencies
-import { config } from './config'
-import { input } from './input'
-import { loop } from './loop'
-import { utils } from './utils'
+import * as config from './config'
+import * as input from './input'
+import * as loop from './loop'
+import * as utils from './utils'
 
 /**
  * @module Platform

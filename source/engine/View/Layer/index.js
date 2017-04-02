@@ -2,9 +2,7 @@
 
 // Dependencies
 import { Item } from '../Item'
-import { config } from '../../Platform/config'
-import { loop } from '../../Platform/loop'
-import { utils } from '../../Platform/utils'
+import { Platform } from '../../Platform'
 
 class Layer {
   constructor (width, height) {
@@ -20,7 +18,7 @@ class Layer {
     document.body.appendChild(this._canvas)
 
     // Add a loop task
-    loop.add(() => {
+    Platform.loop.add(() => {
       this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height)
 
       let entity
@@ -35,7 +33,7 @@ class Layer {
         const {dx: entityX, dy: entityY} = entity.getCoordinates()
 
         // Draw a boundry box if in debug mode
-        if (config.debugEnabled) {
+        if (Platform.config.debugEnabled) {
           entity._ctx.strokeRect(0, 0, canvas.width, canvas.height)
         }
 
@@ -116,7 +114,7 @@ class Layer {
         const {dx: e1dx, dy: e1dy} = entity1.getCenterCoordinates()
         const {dx: e2dx, dy: e2dy} = entity2.getCenterCoordinates()
 
-        if (utils.pythagoras(e2dx - e1dx, e2dy - e1dy) < e1radius + e2radius) {
+        if (Platform.utils.pythagoras(e2dx - e1dx, e2dy - e1dy) < e1radius + e2radius) {
           collisions[collisions.length] = [entity1, entity2]
         }
       }

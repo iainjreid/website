@@ -1,12 +1,12 @@
 'use strict'
 
 // Dependencies
-import { config } from '../config'
+import * as config from '../config'
 
 /**
  * @description The loop maintains a consistant frame-rate throughout the lifecycle of the application.
  */
-const loop = {}
+
 let tasks = []
 let shouldRun
 let fpsCounter = 0
@@ -18,7 +18,7 @@ let fpsCounter = 0
  *
  * @returns {Object} The loop object
  */
-loop.add = (fn, priority = 60) => {
+export function add (fn, priority = 60) {
   // Ensure that a function has been provided
   if (typeof fn !== 'function') {
     throw Error('Only functions may be added to the loop')
@@ -28,9 +28,6 @@ loop.add = (fn, priority = 60) => {
 
   // Sort the task by priority
   tasks.sort((a, b) => a.priority > b.priority)
-
-  // Return the Loop object
-  return loop
 }
 
 /**
@@ -38,12 +35,9 @@ loop.add = (fn, priority = 60) => {
  *
  * @returns {Object} The loop object
  */
-loop.start = () => {
+export function start () {
   shouldRun = true
   window.requestAnimationFrame(process)
-
-  // Return the Loop object
-  return loop
 }
 
 /**
@@ -51,11 +45,8 @@ loop.start = () => {
  *
  * @returns {Object} The loop object
  */
-loop.stop = () => {
+export function stop () {
   shouldRun = false
-
-  // Return the loop object
-  return loop
 }
 
 let t0, t1
@@ -90,7 +81,7 @@ function process () {
   window.requestAnimationFrame(process)
 }
 
-window.onerror = loop.stop
+window.onerror = stop
 
 // FPS Counter
 if (config.fpsCounter) {
@@ -99,5 +90,3 @@ if (config.fpsCounter) {
     fpsCounter = 0
   }, 1000)
 }
-
-export { loop }

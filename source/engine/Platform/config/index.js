@@ -1,11 +1,7 @@
 'use strict'
 
-const config = {}
+export const fpsCounter = true
 
-config.fpsCounter = true
+export const debugEnabled = false
 
-config.debugEnabled = false
-
-config.performanceFeedback = false
-
-export { config }
+export const performanceFeedback = false
