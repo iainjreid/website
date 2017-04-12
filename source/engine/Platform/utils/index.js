@@ -2,7 +2,6 @@
 
 const utils = {}
 let uid = 0
-const letters = '0123456789ABCDEF'
 
 /**
  * @description This method will return a unique string.
@@ -26,11 +25,7 @@ export function randomNumberBetween (a, b) {
 }
 
 export function randomColorHex () {
-  let color = '#'
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)]
-  }
-  return color
+  return '#' + Math.floor(Math.random() * 16777215).toString(16)
 }
 
 export function getDotProduct (a, b) {
