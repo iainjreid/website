@@ -4,7 +4,7 @@
 import { collisions } from './properties/collisions'
 import { vectors } from './properties/vectors'
 
-class Item {
+export class Item {
   constructor (dx, dy, width, height, canvas) {
     this._canvas = canvas || document.createElement('canvas')
     this._ctx = this._canvas.getContext('2d')
@@ -23,7 +23,7 @@ class Item {
   /**
    * @description This method will return a reference to the canvas element belonging to the Item.
    *
-   * @return {Object} The canvas belonging to the Item
+   * @returns {Object} The canvas belonging to the Item
    */
   getCanvas () {
     return this._canvas
@@ -33,28 +33,28 @@ class Item {
    * @description This method will return a reference to the context derived from the canvas element belonging to the
    *              Item.
    *
-   * @return {Object} The canvas context belonging to this Item
+   * @returns {Object} The canvas context belonging to this Item
    */
   getContext () {
     return this._ctx
   }
 
   /**
-   * @return {Number} The width of the canvas object
+   * @returns {Number} The width of the canvas object
    */
   getWidth () {
     return this._canvas.width
   }
 
   /**
-   * @return {Number} The height of the canvas object
+   * @returns {Number} The height of the canvas object
    */
   getHeight () {
     return this._canvas.height
   }
 
   /**
-   * @return {Object} The true coordinates of the Item
+   * @returns {Object} The true coordinates of the Item
    */
   getCoordinates () {
     return {
@@ -159,5 +159,3 @@ class Item {
     return vectors
   }
 }
-
-export { Item }

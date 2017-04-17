@@ -14,12 +14,6 @@ import * as utils from './utils'
  *              the browser window and document objects for changes and for user related actions like resizing and input
  *              events, and also exposes a number of utility functions.
  */
-const Platform = {}
-
-Platform.config = config
-Platform.hooks = hooks
-Platform.input = input
-Platform.loop = loop
-Platform.utils = utils
+const Platform = { config, hooks, input, loop, utils }
 
 export { Platform }

@@ -4,8 +4,8 @@
 import { Item } from '../Item'
 import { Platform } from '../../Platform'
 
-class Layer {
-  constructor (width, height) {
+export class Layer {
+  constructor(width, height) {
     // Create the canvas objects
     this._canvas = document.createElement('canvas')
     this._ctx = this._canvas.getContext('2d')
@@ -30,7 +30,7 @@ class Layer {
 
         // Clear the relevant part of the layer and redraw the component
         const canvas = entity.getContext().canvas
-        const {dx: entityX, dy: entityY} = entity.getCoordinates()
+        const { dx: entityX, dy: entityY } = entity.getCoordinates()
 
         // Draw a boundry box if in debug mode
         if (Platform.config.debugEnabled) {
@@ -45,7 +45,7 @@ class Layer {
   /**
    * @description This method will return a reference to the canvas element belonging to the Layer.
    *
-   * @return {Object} The canvas belonging to the Layer
+   * @returns {Object} The canvas belonging to the Layer
    */
   getCanvas () {
     return this._canvas
@@ -55,7 +55,7 @@ class Layer {
    * @description This method will return a reference to the context derived from the canvas element belonging to the
    *              Layer.
    *
-   * @return {Object} The canvas context belonging to this Layer
+   * @returns {Object} The canvas context belonging to this Layer
    */
   getContext () {
     return this._ctx
@@ -149,5 +149,3 @@ class Layer {
     return Layer
   }
 }
-
-export { Layer }

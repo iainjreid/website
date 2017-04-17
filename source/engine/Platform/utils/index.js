@@ -6,7 +6,7 @@ let uid = 0
 /**
  * @description This method will return a unique string.
  *
- * @return {String} The unique string
+ * @returns {String} The unique string
  */
 export function generateUid () {
   return (uid++).toString(36)

@@ -22,7 +22,7 @@ const layers = []
  * @param {Number=} width  - The width of the Layer
  * @param {Number=} height - The height of the Layer
  *
- * @return {Layer} The newly created Layer
+ * @returns {Layer} The newly created Layer
  */
 View.createLayer = (width, height) => {
   let layer = layers[layers.length] = new Layer(width, height)
@@ -45,7 +45,7 @@ View.createItem = ({draw = Function, coordinates: {dx, dy}, dimensions: {width, 
  *
  * @param {String} uid - The unique identifier of the Layer
  *
- * @return {Layer} The Layer with the supplied unique identifier
+ * @returns {Layer} The Layer with the supplied unique identifier
  */
 View.getLayer = (uid) => {
   for (let i = 0, n = layers.length; i < n; i++) {
@@ -58,7 +58,7 @@ View.getLayer = (uid) => {
 /**
  * @description This method will return a reference to all of the Layers within the View.
  *
- * @return {Layer[]} The Layers within the View
+ * @returns {Layer[]} The Layers within the View
  */
 View.getLayers = () => {
   return layers

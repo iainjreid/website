@@ -34,27 +34,8 @@ export function collisions (superclass) {
 }
 
 Platform.loop.add(() => {
-  const collisions = []
-
-  for (let i1 = 0, n = updates.length; i1 < n; i1++) {
-    for (let i2 = i1 + 1; i2 < n; i2++) {
-      const entity1 = updates[i1]
-      const entity2 = updates[i2]
-
-      const e1radius = entity1.getWidth() / 2
-      const e2radius = entity2.getWidth() / 2
-
-      const { dx: e1dx, dy: e1dy } = entity1.getCenterCoordinates()
-      const { dx: e2dx, dy: e2dy } = entity2.getCenterCoordinates()
-
-      if (Platform.utils.pythagoras(e2dx - e1dx, e2dy - e1dy) < e1radius + e2radius) {
-        collisions[collisions.length] = [entity1, entity2]
-      }
-    }
-  }
-
-  while (collisions.length) {
-    Platform.hooks.fire('collision', collisions.shift())
+  while (updates.length) {
+    Platform.hooks.fire('collision', updates.shift())
   }
 
   updates.length = 0
