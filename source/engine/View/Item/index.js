@@ -71,8 +71,8 @@ class Item {
    * @param {Number} obj.dy - The new Y coordinate to be used
    */
   setCoordinates ({dx, dy}) {
-    this.dx = dx
-    this.dy = dy
+    this.setDxCoordinate(dx)
+    this.setDyCoordinate(dy)
   }
 
   getDxCoordinate () {

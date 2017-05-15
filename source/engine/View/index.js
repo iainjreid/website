@@ -17,15 +17,14 @@ const View = { Item, Layer }
 const layers = []
 
 /**
- * @description This method will create a new Layer and add it to the View. The Layer must be given some sort of unique
- *              identifier so that it may be easily identified throughout the runtime of the application, so in the case
- *              that an identifier is not supplied, a unique hash will be generated instead.
+ * @description This method will create a new Layer that will in turn be added to the View.
  *
- * @param {String=} uid - The unique identifier to be assigned to the Layer
+ * @param {Number=} width  - The width of the Layer
+ * @param {Number=} height - The height of the Layer
  *
  * @return {Layer} The newly created Layer
  */
-View.createLayer = (elementId, width, height) => {
+View.createLayer = (width, height) => {
   let layer = layers[layers.length] = new Layer(width, height)
 
   return layer
@@ -57,7 +56,7 @@ View.getLayer = (uid) => {
 }
 
 /**
- * @description This method will return a references to all of the Layers within the View.
+ * @description This method will return a reference to all of the Layers within the View.
  *
  * @return {Layer[]} The Layers within the View
  */
@@ -67,7 +66,7 @@ View.getLayers = () => {
 
 /**
  * To ensure that the application respects the boundaries of the Browser window, we must resize all of the relevant
- * Layers.
+ * Layers when required.
  */
 window.addEventListener('resize', () => {
   let layer

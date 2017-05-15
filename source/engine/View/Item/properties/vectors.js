@@ -54,14 +54,6 @@ export function vectors (superclass) {
     }
 
     /**
-     * @description This method will reverse the X and Y values of the Vector.
-     */
-    reverseVector () {
-      this.vectorX = -this.vectorX
-      this.vectorY = -this.vectorY
-    }
-
-    /**
      * @description This method will reverse the X value of the Vector.
      */
     reverseVectorX () {
@@ -73,21 +65,6 @@ export function vectors (superclass) {
      */
     reverseVectorY () {
       this.vectorY = -this.vectorY
-    }
-
-    /**
-     * @description This method will swap the X and Y values of the supplied Vector with this Vector.
-     *
-     * @param {Object} item - The Vector to switch the X and Y values with
-     */
-    reflectVector (item) {
-      // Ensure that the Item is valid
-      if (!(item instanceof Vectors)) {
-        throw Error('Item must include the Vector class')
-      }
-
-      this.vectorX = [item.vectorX, item.vectorX = this.vectorX][0]
-      this.vectorY = [item.vectorY, item.vectorY = this.vectorY][0]
     }
 
     /**

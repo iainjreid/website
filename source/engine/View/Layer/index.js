@@ -100,29 +100,6 @@ class Layer {
     return this._entities
   }
 
-  getCollisions () {
-    const collisions = []
-
-    for (let i1 = 0, n = this._entities.length; i1 < n; i1++) {
-      for (let i2 = i1 + 1; i2 < n; i2++) {
-        const entity1 = this._entities[i1]
-        const entity2 = this._entities[i2]
-
-        const e1radius = entity1.getWidth() / 2
-        const e2radius = entity2.getWidth() / 2
-
-        const {dx: e1dx, dy: e1dy} = entity1.getCenterCoordinates()
-        const {dx: e2dx, dy: e2dy} = entity2.getCenterCoordinates()
-
-        if (Platform.utils.pythagoras(e2dx - e1dx, e2dy - e1dy) < e1radius + e2radius) {
-          collisions[collisions.length] = [entity1, entity2]
-        }
-      }
-    }
-
-    return collisions
-  }
-
   /**
    * @description This method will completely clear the canvas.
    */
