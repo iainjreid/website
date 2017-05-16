@@ -7,29 +7,28 @@ const updates = []
 
 export function collisions (superclass) {
   return class Collisions extends superclass {
-    constructor () {
-      super(arguments)
+    /**
+     * @todo Add items with collisions to separate list, and then check moving items against that list, thereby
+     *       allowing stationary items to recieve collision detection too.
+     */
+    // constructor (...args) {
+    //   super(...args)
+    // }
 
-      /**
-       * @todo Add items with collisions to separate list, and then check moving items against that list, thereby
-       *       allowing stationary items to recieve collision detection too.
-       */
-    }
-
-    setDxCoordinate () {
+    setDxCoordinate (...args) {
       if (!updates.includes(this)) {
         updates.push(this)
       }
 
-      super.setDxCoordinate(arguments)
+      super.setDxCoordinate(...args)
     }
 
-    setDyCoordinate () {
+    setDyCoordinate (...args) {
       if (!updates.includes(this)) {
         updates.push(this)
       }
 
-      super.setDyCoordinate(arguments)
+      super.setDyCoordinate(...args)
     }
   }
 }
