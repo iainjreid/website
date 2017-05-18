@@ -70,7 +70,7 @@ class Item {
    * @param {Number} obj.dx - The new X coordinate to be used
    * @param {Number} obj.dy - The new Y coordinate to be used
    */
-  setCoordinates ({dx, dy}) {
+  setCoordinates ({ dx, dy }) {
     this.setDxCoordinate(dx)
     this.setDyCoordinate(dy)
   }
@@ -131,6 +131,15 @@ class Item {
     return Item
   }
 
+  /**
+   * @description This static method attempts to emulate similar functionality to that found in Scala Traits. There are
+   *              a limited set of static properties available on this class that can be mixed in with the basic
+   *              functionality already available.
+   *
+   * @param {*} properties
+   *
+   * @returns {Item} A new Item with extra functionality from the properties specified
+   */
   static with (...properties) {
     return properties.reduce((superclass, property) => {
       // Ensure that the property is avaiable on this class if the property is supplied as a string
