@@ -3,7 +3,7 @@
 import { Platform, View } from './engine'
 
 class Ball extends View.Item.with('vectors', 'collisions') {
-  constructor() {
+  constructor () {
     // Set a random position
     super(Platform.utils.randomNumberBetween(60, window.innerWidth - 60), Platform.utils.randomNumberBetween(60, window.innerHeight - 60), 12, 12)
 

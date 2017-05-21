@@ -5,7 +5,7 @@ import { Item } from '../Item'
 import { Platform } from '../../Platform'
 
 export class Layer {
-  constructor(width, height) {
+  constructor (width, height) {
     // Create the canvas objects
     this._canvas = document.createElement('canvas')
     this._ctx = this._canvas.getContext('2d')
