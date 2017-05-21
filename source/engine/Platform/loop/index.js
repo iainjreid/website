@@ -27,7 +27,7 @@ export function add (fn, priority = 60) {
   tasks.push({ fn, priority })
 
   // Sort the task by priority
-  tasks.sort((a, b) => a.priority > b.priority)
+  tasks = tasks.sort((a, b) => a.priority < b.priority)
 }
 
 /**
@@ -49,6 +49,7 @@ export function stop () {
   shouldRun = false
 }
 
+let i1, n1
 let t0, t1
 function process () {
   if (!shouldRun) {
@@ -60,11 +61,10 @@ function process () {
     t0 = performance.now()
   }
 
-  let i = 0
-  let n = tasks.length
-
-  while (i < n) {
-    tasks[i++].fn()
+  i1 = 0
+  n1 = tasks.length
+  while (i1 < n1) {
+    tasks[i1++].fn()
   }
 
   // Performance metrics

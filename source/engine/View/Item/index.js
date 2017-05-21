@@ -2,6 +2,7 @@
 
 // Properties
 import { collisions } from './properties/collisions'
+import { gravity } from './properties/gravity'
 import { vectors } from './properties/vectors'
 
 export class Item {
@@ -153,6 +154,10 @@ export class Item {
 
   static get collisions () {
     return collisions
+  }
+
+  static get gravity () {
+    return gravity
   }
 
   static get vectors () {

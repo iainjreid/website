@@ -3,22 +3,16 @@
 // Dependencies
 import { Platform } from '../../../Platform'
 
+const entities = []
+
 export function vectors (superclass) {
   return class Vectors extends superclass {
     constructor () {
       super(...arguments)
+      entities.push(this)
 
       this.vectorX = 0
       this.vectorY = 0
-
-      Platform.loop.add(() => {
-        const {dx: ballX, dy: ballY} = this.getCoordinates()
-
-        this.setCoordinates({
-          dx: ballX + this.vectorX,
-          dy: ballY + this.vectorY
-        })
-      })
     }
 
     /**
@@ -63,8 +57,17 @@ export function vectors (superclass) {
     /**
      * @description This method will reverse the Y value of the Vector.
      */
-    reverseVectorY () {
-      this.vectorY = -this.vectorY
+    reverseVectorY (dy) {
+      if (dy) {
+        const vectorY = this.vectorY
+        this.vectorY = dy
+
+        window.requestAnimationFrame(() => {
+          this.vectorY = -vectorY
+        })
+      } else {
+        this.vectorY = -this.vectorY
+      }
     }
 
     /**
@@ -122,3 +125,14 @@ export function vectors (superclass) {
     }
   }
 }
+
+Platform.loop.add(() => {
+  for (let entity of entities) {
+    const { dx: ballX, dy: ballY } = entity.getCoordinates()
+
+    entity.setCoordinates({
+      dx: ballX + entity.vectorX,
+      dy: ballY + entity.vectorY
+    })
+  }
+}, Infinity)

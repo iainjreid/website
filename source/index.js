@@ -2,21 +2,23 @@
 
 import { Platform, View } from './engine'
 
-class Ball extends View.Item.with('vectors', 'collisions') {
+class Ball extends View.Item.with('vectors', 'gravity', 'collisions') {
   constructor () {
     // Set a random position
-    super(Platform.utils.randomNumberBetween(60, window.innerWidth - 60), Platform.utils.randomNumberBetween(60, window.innerHeight - 60), 12, 12)
+    super(Platform.utils.randomNumberBetween(60, window.innerWidth - 60), 700, 12, 12)
 
-    this.color = Platform.utils.randomColorHex()
+    // this.color = Platform.utils.randomColorHex()
+    this.color = '000'
 
     // Set a random trajectory
-    this.setVectorX(Platform.utils.randomNumberBetween(-5, 5))
-    this.setVectorY(Platform.utils.randomNumberBetween(-5, 5))
+    // this.setVectorX(Platform.utils.randomNumberBetween(-5, 5))
   }
 
   draw (ctx) {
+    const radius = this.getWidth() / 2
+
     ctx.beginPath()
-    ctx.arc(6, 6, 6, Math.PI * 2, false)
+    ctx.arc(radius, radius, radius, Math.PI * 2, false)
     ctx.fillStyle = this.color
     ctx.fill()
     ctx.closePath()
@@ -25,13 +27,13 @@ class Ball extends View.Item.with('vectors', 'collisions') {
 
 const layer = View.createLayer()
 
-for (let i = 0; i < 50; i++) {
-  setTimeout(() => layer.addEntity(new Ball()), i * 100)
+for (let i = 0; i < 1; i++) {
+  layer.addEntity(new Ball())
 }
 
 Platform.hooks.on('collision', (item1, item2) => {
-  item1.reflectVectorX(item2)
-  item1.reflectVectorY(item2)
+  // item1.reflectVectorX(item2)
+  // item1.reflectVectorY(item2)
 })
 
 Platform.loop.add(() => {
@@ -46,15 +48,15 @@ Platform.loop.add(() => {
     ball = entities[i++]
 
     // Ball Controls
-    let { dx: ballX, dy: ballY } = ball.getCoordinates()
+    let { dx, dy } = ball.getCoordinates()
     let [vectorX, vectorY] = [ball.getVectorX(), ball.getVectorY()]
 
-    if (ballX + vectorX + ball.getWidth() > layer.getWidth() || ballX + vectorX <= 0) {
+    if (dx + vectorX + ball.getWidth() >= layer.getWidth() || dx + vectorX <= 0) {
       ball.reverseVectorX()
     }
 
-    if (ballY + vectorY + ball.getHeight() > layer.getHeight() || ballY + vectorY <= 0) {
-      ball.reverseVectorY()
+    if (dy + vectorY + ball.getHeight() >= layer.getHeight() || dy + vectorY <= 0) {
+      ball.reverseVectorY(layer.getHeight() - dy + vectorY + ball.getHeight())
     }
   }
 })

@@ -11,8 +11,8 @@ export function collisions (superclass) {
      * @todo Add items with collisions to separate list, and then check moving items against that list, thereby
      *       allowing stationary items to recieve collision detection too.
      */
-    // constructor (...args) {
-    //   super(...args)
+    // constructor () {
+    //   super(...arguments)
     // }
 
     setDxCoordinate (...args) {
@@ -58,4 +58,4 @@ Platform.loop.add(() => {
   }
 
   updates.length = 0
-}, 100)
+}, Infinity)
