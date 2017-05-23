@@ -14,8 +14,21 @@ export function gravity (superclass) {
   }
 }
 
+const windowCentre = { dx: window.innerWidth / 2, dy: window.innerHeight / 2 }
+
 Platform.loop.add(() => {
   for (let entity of entities) {
-    entity.setVectorY(entity.getVectorY() + 1)
+    let ballCentre = entity.getCenterCoordinates()
+
+    const angle = Platform.utils.radiansToDegrees(Platform.utils.getAngleBetweenThreePoints({
+      dx: ballCentre.dx,
+      dy: windowCentre.dy
+    }, windowCentre, ballCentre))
+
+    const diffX = Platform.utils.adjacentLength(angle, 0.8)
+    const diffY = Platform.utils.oppositeLength(angle, 0.8)
+
+    entity.setVectorX(entity.getVectorX() + diffX)
+    entity.setVectorY(entity.getVectorY() + diffY)
   }
 }, 0)

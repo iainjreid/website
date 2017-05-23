@@ -5,13 +5,14 @@ import { Platform, View } from './engine'
 class Ball extends View.Item.with('vectors', 'gravity', 'collisions') {
   constructor () {
     // Set a random position
-    super(Platform.utils.randomNumberBetween(60, window.innerWidth - 60), 700, 12, 12)
+    super(Platform.utils.randomNumberBetween(60, window.innerWidth - 60), Platform.utils.randomNumberBetween(60, window.innerHeight - 60), 12, 12)
 
     // this.color = Platform.utils.randomColorHex()
     this.color = '000'
 
     // Set a random trajectory
     // this.setVectorX(Platform.utils.randomNumberBetween(-5, 5))
+    // this.setVectorY(Platform.utils.randomNumberBetween(-5, 5))
   }
 
   draw (ctx) {
@@ -52,7 +53,7 @@ Platform.loop.add(() => {
     let [vectorX, vectorY] = [ball.getVectorX(), ball.getVectorY()]
 
     if (dx + vectorX + ball.getWidth() >= layer.getWidth() || dx + vectorX <= 0) {
-      ball.reverseVectorX()
+      ball.reverseVectorX(layer.getWidth() - dx + vectorX + ball.getWidth())
     }
 
     if (dy + vectorY + ball.getHeight() >= layer.getHeight() || dy + vectorY <= 0) {

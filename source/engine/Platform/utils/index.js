@@ -1,6 +1,5 @@
 'use strict'
 
-const utils = {}
 let uid = 0
 
 /**
@@ -13,11 +12,11 @@ export function generateUid () {
 }
 
 export function randomX () {
-  return utils.randomNumberBetween(100, window.innerWidth - 100)
+  return randomNumberBetween(100, window.innerWidth - 100)
 }
 
 export function randomY () {
-  return utils.randomNumberBetween(100, window.innerHeight - 100)
+  return randomNumberBetween(100, window.innerHeight - 100)
 }
 
 export function randomNumberBetween (a, b) {
@@ -43,11 +42,19 @@ export function pythagoras (a, b) {
   return Math.sqrt(a * a + b * b)
 }
 
+export function adjacentLength (angle, hypotenuse) {
+  return Math.cos(angle * Math.PI / 180) * hypotenuse
+}
+
+export function oppositeLength (angle, hypotenuse) {
+  return Math.sin(angle * Math.PI / 180) * hypotenuse
+}
+
 export function getAngleBetweenThreePoints (a, b, c) {
   const ab = [b.dx - a.dx, b.dy - a.dy]
   const bc = [c.dx - b.dx, c.dy - b.dy]
 
-  return Math.acos(-utils.getDotProduct(ab, bc) / (utils.pythagoras(...ab) * utils.pythagoras(...bc)))
+  return Math.acos(-getDotProduct(ab, bc) / (pythagoras(...ab) * pythagoras(...bc)))
 }
 
 export function getCenterBetweenTwoPoints (a, b) {
@@ -64,5 +71,3 @@ export function degreesToRadians (degrees) {
 export function radiansToDegrees (radians) {
   return radians * 180 / Math.PI
 }
-
-export { utils }
