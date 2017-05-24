@@ -25,10 +25,10 @@ Platform.loop.add(() => {
       dy: windowCentre.dy
     }, windowCentre, ballCentre))
 
-    const diffX = Platform.utils.adjacentLength(angle, 0.8)
-    const diffY = Platform.utils.oppositeLength(angle, 0.8)
+    const diffX = Platform.utils.adjacentLength(angle, 0.3)
+    const diffY = Platform.utils.oppositeLength(angle, 0.3)
 
-    entity.setVectorX(entity.getVectorX() + diffX)
-    entity.setVectorY(entity.getVectorY() + diffY)
+    entity.setVectorX(entity.getVectorX() + (ballCentre.dx < windowCentre.dx ? diffX : -diffX))
+    entity.setVectorY(entity.getVectorY() + (ballCentre.dy < windowCentre.dy ? diffY : -diffY))
   }
 }, 0)
