@@ -10,6 +10,7 @@ import * as config from '../config'
 let tasks = []
 let shouldRun
 let fpsCounter = 0
+let fpsDuration = 0
 
 /**
  * @description This method will add the supplied function to the processing cycle.
@@ -49,33 +50,27 @@ export function stop () {
   shouldRun = false
 }
 
-let i1, n1
-let t0, t1
+let i, n
 function process () {
   if (!shouldRun) {
     return
   }
 
-  // Performance metrics
-  if (config.performanceFeedback) {
-    t0 = performance.now()
+  // FPS Details
+  if (config.fpsDetails) {
+    fpsDuration -= performance.now()
   }
 
-  i1 = 0
-  n1 = tasks.length
-  while (i1 < n1) {
-    tasks[i1++].fn()
+  i = 0
+  n = tasks.length
+  while (i < n) {
+    tasks[i++].fn()
   }
 
-  // Performance metrics
-  if (config.performanceFeedback) {
-    t1 = performance.now()
-    console.log('Frame took %sms', t1 - t0)
-  }
-
-  // FPS Counter
-  if (config.fpsCounter) {
+  // FPS Details
+  if (config.fpsDetails) {
     fpsCounter++
+    fpsDuration += performance.now()
   }
 
   window.requestAnimationFrame(process)
@@ -83,10 +78,29 @@ function process () {
 
 window.onerror = stop
 
-// FPS Counter
-if (config.fpsCounter) {
+// FPS Details
+if (config.fpsDetails) {
+  let startTime = performance.now()
+  let totalTime
+
   setInterval(() => {
-    console.debug('%s FPS', fpsCounter)
+    totalTime = performance.now() - startTime
+    fpsCounter = fpsCounter / 1000 * totalTime
+    fpsDuration = fpsDuration / 1000 * totalTime
+
+    console.debug('%s FPS', roundNumber(fpsCounter))
+    console.debug('- Actual duration: %sms', roundNumber(totalTime))
+    console.debug('- Time spent processing: %sms', roundNumber(fpsDuration))
+    console.debug('- Average tick duration: %sms', roundNumber(fpsDuration / fpsCounter))
+    console.debug('- Average frame duration: %sms', roundNumber(totalTime / fpsCounter))
+    console.debug('- Processing utilisation: %s%', roundNumber(fpsDuration / totalTime * 100))
+
+    startTime = performance.now()
     fpsCounter = 0
+    fpsDuration = 0
   }, 1000)
+}
+
+function roundNumber (number) {
+  return Math.round(number * 1000) / 1000
 }

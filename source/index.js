@@ -6,7 +6,7 @@ import { Platform, View } from './engine'
  * @todo Add check to ensure total energy in the view is constant over time.
  */
 
-class Ball extends View.Item.with('vectors', 'gravity', 'collisions') {
+class Ball extends View.Item.with('vectors', 'gravity', 'collisions', 'resistance') {
   constructor () {
     // Set a random position
     super(Platform.utils.randomNumberBetween(60, window.innerWidth - 100), Platform.utils.randomNumberBetween(60, window.innerHeight - 100), 12, 12)
@@ -14,8 +14,8 @@ class Ball extends View.Item.with('vectors', 'gravity', 'collisions') {
     this.color = Platform.utils.randomColorHex()
 
     // Set a random trajectory
-    this.setVectorX(Platform.utils.randomNumberBetween(-3, 3))
-    this.setVectorY(Platform.utils.randomNumberBetween(-3, 3))
+    // this.setVectorX(Platform.utils.randomNumberBetween(-3, 3))
+    // this.setVectorY(Platform.utils.randomNumberBetween(-3, 3))
   }
 
   draw (ctx) {
@@ -47,7 +47,7 @@ layer.addEntity(new class extends View.Item {
   }
 }())
 
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 400; i++) {
   layer.addEntity(new Ball())
 }
 

@@ -32,3 +32,8 @@ Platform.loop.add(() => {
     entity.setVectorY(entity.getVectorY() + (ballCentre.dy < windowCentre.dy ? diffY : -diffY))
   }
 }, 0)
+
+document.addEventListener('click', evt => {
+  windowCentre.dx = evt.clientX
+  windowCentre.dy = evt.clientY
+})
