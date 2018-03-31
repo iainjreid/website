@@ -18,9 +18,8 @@
     "eslint-plugin-promise": "^2.0.1",
     "eslint-plugin-standard": "^2.0.0",
     "file-loader": "^0.9.0",
-    "html-webpack-plugin": "^3.1.0",
     "jsdoc": "^3.4.1",
-    "webpack": "^1.13.2",
+    "webpack-cli": "^2.0.13",
     "webpack-dev-server": "^1.15.1"
   },
   "greenkeeper": {
