@@ -1,42 +1,38 @@
 'use strict'
 
-// Hack for Ubuntu on Windows: interface enumeration fails with EINVAL, so return empty.
-try {
-  require('os').networkInterfaces()
-} catch (e) {
-  require('os').networkInterfaces = () => ({})
-}
+const path = require('path')
+
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: {
-    app: './source/index.js'
+    app: './src/main/index.js'
   },
-  output: {
-    path: 'build',
-    publicPath: '/build/',
-    filename: 'bundle.js'
+  devServer: {
+    contentBase: './dist'
   },
   module: {
-    preLoaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader'
-      }
-    ],
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader'
-      },
-      {
-        test: /\.png$/,
-        loader: 'file-loader'
-      }
-    ]
+    preLoaders: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loader: 'eslint-loader'
+    }],
+    loaders: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loader: 'babel-loader'
+    }, {
+      test: /\.png$/,
+      loader: 'file-loader'
+    }]
   },
-  watchOptions: {
-    poll: true
-  }
+  output: {
+    filename: '[name].[chunkhash].js',
+    path: path.resolve(__dirname, 'dist')
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/main/index.html'
+    })
+  ]
 }
