@@ -21,3 +21,4 @@ deploy:
 branches:
   only:
   - master
+  - /^greenkeeper/.*$/
