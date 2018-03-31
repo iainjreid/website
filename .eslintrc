@@ -1,10 +1,6 @@
 {
   "parser": "babel-eslint",
   "extends": "standard",
-  "plugins": [
-    "standard",
-    "promise"
-  ],
   "globals": {
     "Image": true,
     "performance": true

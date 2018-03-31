@@ -10,18 +10,24 @@ module.exports = {
     contentBase: './dist'
   },
   module: {
-    preLoaders: [{
+    rules: [{
       test: /\.js$/,
       exclude: /node_modules/,
-      loader: 'eslint-loader'
-    }],
-    loaders: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader'
+      use: [{
+        loader: 'babel-loader'
+      }]
     }, {
       test: /\.png$/,
-      loader: 'file-loader'
+      use: [{
+        loader: 'file-loader'
+      }]
+    }, {
+      test: /\.js$/,
+      exclude: /node_modules/,
+      use: [{
+        loader: 'eslint-loader'
+      }],
+      enforce: 'pre'
     }]
   },
   output: {
