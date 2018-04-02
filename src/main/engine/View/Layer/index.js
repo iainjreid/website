@@ -21,19 +21,12 @@ export class Layer {
     Platform.loop.add(() => {
       this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height)
 
-      let entity
-      let i = 0
-      let n = this._entities.length
-
-      for (; i < n;) {
-        entity = this._entities[i++]
-
-        // Clear the relevant part of the layer and redraw the component
-        const canvas = entity.getContext().canvas
+      for (let entity of this._entities) {
+        const canvas = entity.getCanvas()
         const { dx: entityX, dy: entityY } = entity.getCoordinates()
 
-        // Draw a boundry box if in debug mode
-        if (Platform.config.debugEnabled) {
+        // Draw a boundry box if enabled
+        if (Platform.config.boundryBoxEnabled) {
           entity._ctx.strokeRect(0, 0, canvas.width, canvas.height)
         }
 
@@ -91,9 +84,7 @@ export class Layer {
     }
 
     // Add the entities to the layer
-    this._entities[this._entities.length] = entity
-
-    return this
+    return (this._entities[this._entities.length] = entity)
   }
 
   getEntities () {

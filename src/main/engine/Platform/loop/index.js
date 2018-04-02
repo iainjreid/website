@@ -50,7 +50,6 @@ export function stop () {
   shouldRun = false
 }
 
-let i, n
 function process () {
   if (!shouldRun) {
     return
@@ -61,10 +60,8 @@ function process () {
     fpsDuration -= performance.now()
   }
 
-  i = 0
-  n = tasks.length
-  while (i < n) {
-    tasks[i++].fn()
+  for (let task of tasks) {
+    task.fn()
   }
 
   // FPS Details
@@ -80,25 +77,44 @@ window.onerror = stop
 
 // FPS Details
 if (config.fpsDetails) {
+  let stats
+
+  if (config.debugBox) {
+    stats = document.body.appendChild(document.createElement('div'))
+
+    stats.style.position = 'absolute'
+    stats.style.left = '10px'
+    stats.style.bottom = '10px'
+    stats.style.background = 'white'
+    stats.style.padding = '10px'
+  }
+
   let startTime = performance.now()
   let totalTime
 
   setInterval(() => {
-    totalTime = performance.now() - startTime
-    fpsCounter = fpsCounter / 1000 * totalTime
-    fpsDuration = fpsDuration / 1000 * totalTime
+    totalTime = (performance.now() - startTime) / (config.fpsUpdateFrequency / 1000)
+    fpsCounter = fpsCounter / config.fpsUpdateFrequency * totalTime
+    fpsDuration = fpsDuration / config.fpsUpdateFrequency * totalTime
 
-    console.debug('%s FPS', roundNumber(fpsCounter))
-    console.debug('- Actual duration: %sms', roundNumber(totalTime))
-    console.debug('- Time spent processing: %sms', roundNumber(fpsDuration))
-    console.debug('- Average tick duration: %sms', roundNumber(fpsDuration / fpsCounter))
-    console.debug('- Average frame duration: %sms', roundNumber(totalTime / fpsCounter))
-    console.debug('- Processing utilisation: %s%', roundNumber(fpsDuration / totalTime * 100))
+    const debugMsg =
+      `${roundNumber(fpsCounter)} FPS\n` +
+      `- Actual duration: ${roundNumber(totalTime)}ms\n` +
+      `- Time spent processing: ${roundNumber(fpsDuration)}ms\n` +
+      `- Average tick duration: ${roundNumber(fpsDuration / fpsCounter)}ms\n` +
+      `- Average frame duration: ${roundNumber(totalTime / fpsCounter)}ms\n` +
+      `- Processing utilisation: ${roundNumber(fpsDuration / totalTime * 100)}%`
+
+    if (config.debugBox) {
+      stats.innerHTML = debugMsg
+    } else {
+      console.debug(debugMsg)
+    }
 
     startTime = performance.now()
     fpsCounter = 0
     fpsDuration = 0
-  }, 1000)
+  }, config.fpsUpdateFrequency)
 }
 
 function roundNumber (number) {

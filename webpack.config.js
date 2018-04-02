@@ -7,7 +7,7 @@ module.exports = {
     app: './src/main/index.js'
   },
   devServer: {
-    contentBase: './dist'
+    publicPath: '/dist/'
   },
   module: {
     rules: [{

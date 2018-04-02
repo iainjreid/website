@@ -6,7 +6,7 @@ import { Platform, View } from './engine'
  * @todo Add check to ensure total energy in the view is constant over time.
  */
 
-class Ball extends View.Item.with('vectors', 'gravity', 'collisions', 'resistance') {
+class Ball extends View.Item.with('vectors', 'gravity') {
   constructor () {
     // Set a random position
     super(Platform.utils.randomNumberBetween(60, window.innerWidth - 100), Platform.utils.randomNumberBetween(60, window.innerHeight - 100), 12, 12)
@@ -31,9 +31,9 @@ class Ball extends View.Item.with('vectors', 'gravity', 'collisions', 'resistanc
 
 const layer = View.createLayer()
 
-layer.addEntity(new class extends View.Item {
+const marker = new class extends View.Item {
   constructor () {
-    super(window.innerWidth / 2, window.innerHeight / 2, 2, 2)
+    super(window.innerWidth / 2, window.innerHeight / 2, 4, 4)
   }
 
   draw (ctx) {
@@ -45,11 +45,39 @@ layer.addEntity(new class extends View.Item {
     ctx.fill()
     ctx.closePath()
   }
-}())
+}()
 
-for (let i = 0; i < 400; i++) {
-  layer.addEntity(new Ball())
+const entities = []
+layer.addEntity(marker)
+
+for (let i = 0; i < 10; i++) {
+  entities.push(layer.addEntity(new Ball()))
 }
+
+Platform.loop.add(() => {
+  const {upArrow, downArrow, leftArrow, rightArrow} = Platform.input.keyboard
+  const {dx, dy} = marker.getCoordinates()
+
+  if (upArrow) {
+    marker.setDyCoordinate(dy - 2)
+  }
+
+  if (downArrow) {
+    marker.setDyCoordinate(dy + 2)
+  }
+
+  if (leftArrow) {
+    marker.setDxCoordinate(dx - 2)
+  }
+
+  if (rightArrow) {
+    marker.setDxCoordinate(dx + 2)
+  }
+
+  for (let entity of entities) {
+    entity.setGravity({ dx, dy })
+  }
+})
 
 Platform.hooks.on('collision', (item1, item2) => {
   item1.reflectVectorX(item2)

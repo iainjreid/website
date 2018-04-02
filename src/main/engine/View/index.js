@@ -48,9 +48,9 @@ View.createItem = ({draw = Function, coordinates: {dx, dy}, dimensions: {width, 
  * @returns {Layer} The Layer with the supplied unique identifier
  */
 View.getLayer = (uid) => {
-  for (let i = 0, n = layers.length; i < n; i++) {
-    if (layers[i].uid === uid) {
-      return layers[i]
+  for (let layer of layers) {
+    if (layer.uid === uid) {
+      return layer
     }
   }
 }
@@ -69,10 +69,7 @@ View.getLayers = () => {
  * Layers when required.
  */
 window.addEventListener('resize', () => {
-  let layer
-
-  for (let i = 0, n = layers.length; i < n; i++) {
-    layer = layers[i]
+  for (let layer of layers) {
     if (!layer._boundariesLocked) {
       layer.resizeCanvas()
     }
