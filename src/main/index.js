@@ -6,7 +6,7 @@ import { Platform, View } from './engine'
  * @todo Add check to ensure total energy in the view is constant over time.
  */
 
-class Ball extends View.Item.with('vectors', 'gravity') {
+class Ball extends View.Item.with('vectors', 'gravity', 'resistance') {
   constructor () {
     // Set a random position
     super(Platform.utils.randomNumberBetween(60, window.innerWidth - 100), Platform.utils.randomNumberBetween(60, window.innerHeight - 100), 12, 12)
@@ -31,58 +31,53 @@ class Ball extends View.Item.with('vectors', 'gravity') {
 
 const layer = View.createLayer()
 
-const marker = new class extends View.Item {
-  constructor () {
-    super(window.innerWidth / 2, window.innerHeight / 2, 4, 4)
-  }
+// const marker = new class extends View.Item {
+//   constructor () {
+//     super(window.innerWidth / 2, window.innerHeight / 2, 4, 4)
+//   }
 
-  draw (ctx) {
-    const radius = this.getWidth() / 2
+//   draw (ctx) {
+//     const radius = this.getWidth() / 2
 
-    ctx.beginPath()
-    ctx.arc(radius, radius, radius, Math.PI * 2, false)
-    ctx.fillStyle = '#000'
-    ctx.fill()
-    ctx.closePath()
-  }
-}()
+//     ctx.beginPath()
+//     ctx.arc(radius, radius, radius, Math.PI * 2, false)
+//     ctx.fillStyle = '#000'
+//     ctx.fill()
+//     ctx.closePath()
+//   }
+// }()
 
-const entities = []
-layer.addEntity(marker)
+// const entities = []
+// layer.addEntity(marker)
 
-for (let i = 0; i < 10; i++) {
-  entities.push(layer.addEntity(new Ball()))
-}
+// for (let i = 0; i < 1000; i++) {
+//   entities.push(layer.addEntity(new Ball()))
+// }
 
-Platform.loop.add(() => {
-  const {upArrow, downArrow, leftArrow, rightArrow} = Platform.input.keyboard
-  const {dx, dy} = marker.getCoordinates()
+// Platform.loop.add(() => {
+//   const {upArrow, downArrow, leftArrow, rightArrow} = Platform.input.keyboard
+//   const {dx, dy} = marker.getCoordinates()
 
-  if (upArrow) {
-    marker.setDyCoordinate(dy - 2)
-  }
+//   if (upArrow) {
+//     marker.setDyCoordinate(dy - 2)
+//   }
 
-  if (downArrow) {
-    marker.setDyCoordinate(dy + 2)
-  }
+//   if (downArrow) {
+//     marker.setDyCoordinate(dy + 2)
+//   }
 
-  if (leftArrow) {
-    marker.setDxCoordinate(dx - 2)
-  }
+//   if (leftArrow) {
+//     marker.setDxCoordinate(dx - 2)
+//   }
 
-  if (rightArrow) {
-    marker.setDxCoordinate(dx + 2)
-  }
+//   if (rightArrow) {
+//     marker.setDxCoordinate(dx + 2)
+//   }
 
-  for (let entity of entities) {
-    entity.setGravity({ dx, dy })
-  }
-})
-
-Platform.hooks.on('collision', (item1, item2) => {
-  item1.reflectVectorX(item2)
-  item1.reflectVectorY(item2)
-})
+//   for (let entity of entities) {
+//     entity.setGravity({ dx, dy })
+//   }
+// })
 
 // Platform.loop.add(() => {
 //   const entities = layer.getEntities()
@@ -108,5 +103,42 @@ Platform.hooks.on('collision', (item1, item2) => {
 //     }
 //   }
 // })
+
+const ball = layer.addEntity(new Ball())
+
+ball.setGravityDy(layer.getHeight())
+ball.disableGravityDx()
+
+Platform.loop.add(() => {
+  const { upArrow, downArrow, leftArrow, rightArrow } = Platform.input.keyboard
+  const { dx, dy } = ball.getCoordinates()
+
+  if (upArrow) {
+    ball.setDyCoordinate(dy - 2)
+  }
+
+  if (downArrow) {
+    ball.setDyCoordinate(dy + 2)
+  }
+
+  if (leftArrow) {
+    ball.setDxCoordinate(dx - 2)
+  }
+
+  if (rightArrow) {
+    ball.setDxCoordinate(dx + 2)
+  }
+}, 0)
+
+Platform.loop.add(() => {
+  let { dy } = ball.getCoordinates()
+  let vectorY = ball.getVectorY()
+  let ballHeight = ball.getHeight()
+  let layerHeight = layer.getHeight()
+
+  if (dy + vectorY + ballHeight >= layerHeight || dy + vectorY <= 0) {
+    ball.reverseVectorY(layerHeight - dy + vectorY + ballHeight)
+  }
+})
 
 Platform.loop.start()

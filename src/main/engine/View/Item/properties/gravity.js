@@ -13,6 +13,8 @@ export function gravity (superclass) {
 
       this.gravityDx = 0
       this.gravityDy = 0
+      this.gravityEnabledDx = true
+      this.gravityEnabledDy = true
     }
 
     getGravity () {
@@ -35,12 +37,28 @@ export function gravity (superclass) {
       this.gravityDx = dx
     }
 
+    disableGravityDx () {
+      this.gravityEnabledDx = false
+    }
+
+    enableGravityDx () {
+      this.gravityEnabledDx = true
+    }
+
     getGravityDy (dy) {
       return this.gravityDy
     }
 
     setGravityDy (dy) {
       this.gravityDy = dy
+    }
+
+    disableGravityDy () {
+      this.gravityEnabledDy = false
+    }
+
+    enableGravityDy () {
+      this.gravityEnabledDx = true
     }
   }
 }
@@ -55,10 +73,10 @@ Platform.loop.add(() => {
       dy: ballGravity.dy
     }, ballGravity, ballCentre))
 
-    const diffX = Platform.utils.adjacentLength(angle, 0.3)
-    const diffY = Platform.utils.oppositeLength(angle, 0.3)
+    const diffX = entity.gravityEnabledDx ? Platform.utils.adjacentLength(angle, 2) : 0
+    const diffY = entity.gravityEnabledDy ? Platform.utils.oppositeLength(angle, 2) : 0
 
-    entity.setVectorX(entity.getVectorX() + (ballCentre.dx < ballGravity.dx ? diffX : -diffX))
-    entity.setVectorY(entity.getVectorY() + (ballCentre.dy < ballGravity.dy ? diffY : -diffY))
+    diffX && entity.setVectorX(entity.getVectorX() + (ballCentre.dx < ballGravity.dx ? diffX : -diffX))
+    diffY && entity.setVectorY(entity.getVectorY() + (ballCentre.dy < ballGravity.dy ? diffY : -diffY))
   }
 }, 0)
