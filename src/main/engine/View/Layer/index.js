@@ -18,21 +18,7 @@ export class Layer {
     document.body.appendChild(this._canvas)
 
     // Add a loop task
-    Platform.loop.add(() => {
-      this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height)
-
-      for (let entity of this._entities) {
-        const canvas = entity.getCanvas()
-        const { dx: entityX, dy: entityY } = entity.getCoordinates()
-
-        // Draw a boundry box if enabled
-        if (Platform.config.boundryBoxEnabled) {
-          entity._ctx.strokeRect(0, 0, canvas.width, canvas.height)
-        }
-
-        this._ctx.drawImage(canvas, entityX, entityY)
-      }
-    })
+    Platform.loop.add(this.renderLayer, Infinity, this)
   }
 
   /**
@@ -129,6 +115,22 @@ export class Layer {
    */
   unlockBoundaries () {
     this._boundariesLocked = false
+  }
+
+  renderLayer () {
+    this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height)
+
+    for (let entity of this._entities) {
+      const canvas = entity.getCanvas()
+      const { dx: entityX, dy: entityY } = entity.getCoordinates()
+
+      // Draw a boundry box if enabled
+      if (Platform.config.boundryBoxEnabled) {
+        entity._ctx.strokeRect(0, 0, canvas.width, canvas.height)
+      }
+
+      this._ctx.drawImage(canvas, entityX, entityY)
+    }
   }
 
   /**

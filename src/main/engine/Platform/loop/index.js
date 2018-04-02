@@ -19,13 +19,13 @@ let fpsDuration = 0
  *
  * @returns {Object} The loop object
  */
-export function add (fn, priority = 60) {
+export function add (fn, priority = 60, scope) {
   // Ensure that a function has been provided
   if (typeof fn !== 'function') {
     throw Error('Only functions may be added to the loop')
   }
 
-  tasks.push({ fn, priority })
+  tasks.push({ fn, priority, scope })
 
   // Sort the task by priority
   tasks = tasks.sort((a, b) => a.priority < b.priority)
@@ -61,7 +61,7 @@ function process () {
   }
 
   for (let task of tasks) {
-    task.fn()
+    task.fn.call(task.scope)
   }
 
   // FPS Details
