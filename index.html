@@ -6,12 +6,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Iain Reid</title>
+  <title>iainreid</title>
 
   <style>
+    @font-face {
+      font-family: DisposableDroidBB;
+      src: url(/src/main/assets/fonts/disposabledroid-bb/DisposableDroidBB.ttf);
+    }
+
     * {
       padding: 0;
       margin: 0;
+    }
+
+    body {
+      display: flex;
+      color: #323232;
+      background-color: #fefefe;
+      font-family: DisposableDroidBB, monospace;
+      font-size: 1.35em;
+      font-weight: 400;
+      letter-spacing: .0625em;
+      line-height: 1.8em;
     }
 
     canvas {
@@ -19,12 +35,110 @@
       display: block;
       margin: 0 auto;
     }
+
+    .centered {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+    }
+
+    .content {
+      flex: 1;
+      margin-top: 1.6rem;
+      margin-bottom: 3.2rem;
+    }
+
+    .float-right {
+      float: right;
+    }
+
+    .introduction {
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .introduction h2 {
+      max-width: 350px;
+      margin: 2px auto;
+    }
+
+    .navigation {
+      width: 100%;
+    }
+
+    .navigation-list {
+      list-style-type: none;
+    }
+
+    .navigation-item {
+      float: left;
+    }
+
+    .navigation-link {
+      color: #191919;
+      padding: 12px;
+      text-decoration: none;
+    }
+
+    .uppercase {
+      text-transform: uppercase
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      width: 100%;
+    }
   </style>
 </head>
 
 <body>
+  <main class="wrapper">
+    <nav class="navigation">
+      <section class="container">
+        <a class="navigation-link" href="/">iainreid</a>
+
+        <!-- <ul class="navigation-list float-right">
+          <li class="navigation-item">
+            <a class="navigation-link" href="/blog/">blog</a>
+          </li>
+
+          <li class="navigation-item">
+            <a class="navigation-link" href="/about/">about</a>
+          </li>
+        </ul> -->
+      </section>
+    </nav>
+
+    <div class="content">
+      <section class="container centered">
+        <div class="introduction">
+          <h2>developer, geek, and teller of tails</h2>
+
+          ~
+
+          <ul class="navigation-list centered uppercase">
+            <li class="navigation-item">
+              <a class="navigation-link" target="_blank" href="https://github.com/iainreid820">Github</a>
+            </li>
+
+            <li class="navigation-item">
+              <a class="navigation-link" target="_blank" href="https://twitter.com/iainreid421">Twitter</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+
   <!-- Application source -->
-  <script type="text/javascript" src="dist/app.js"></script>
+  <!-- <script type="text/javascript" src="dist/app.js"></script> -->
 
   <!-- GA Tracking -->
   <script>
