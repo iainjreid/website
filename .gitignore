@@ -1,9 +1,6 @@
-# Ignore all IDE generated paths
-.vscode
+.bundle
+vendor
 
-# Ignore all Node.js and NPM related paths
-npm-debug.log
-node_modules
-
-# Strip JSDoc generated documentation
-docs
+_site
+.sass-cache
+.jekyll-metadata

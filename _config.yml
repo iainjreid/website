@@ -1,0 +1,27 @@
+title: Iain Reid
+description: Programmer, lover of coffee, and player of games. I'm Iain, it's nice to meet you.
+
+url: https://iainreid820.github.io
+repository: iainreid820/iainreid820.github.io
+
+# Social profiles
+social:
+  twitter: iainreid421
+  github: iainreid820
+
+# Build settings
+markdown: kramdown
+
+theme: jekyll-theme-fluffy
+
+fluffy:
+  style:
+    imports:
+      - "https://fonts.googleapis.com/css?family=Cutive+Mono"
+    setup:
+      font-color: "#4a4a4a"
+      font-family: "'Cutive Mono', monospace"
+
+plugins:
+  - jekyll-feed
+  - jekyll-minifier
