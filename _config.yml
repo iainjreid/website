@@ -13,6 +13,7 @@ social:
 markdown: kramdown
 
 theme: jekyll-theme-fluffy
+remote_theme: iainreid820/jekyll-theme-fluffy
 
 fluffy:
   style:
