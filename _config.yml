@@ -12,9 +12,10 @@ social:
 # Build settings
 markdown: kramdown
 
-theme: jekyll-theme-fluffy
+# Github theme
 remote_theme: iainreid820/jekyll-theme-fluffy
 
+# Fluffy configuration
 fluffy:
   style:
     imports:
