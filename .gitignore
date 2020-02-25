@@ -1,6 +1,10 @@
-.bundle
-vendor
+# Ignore all IDE generated paths
+/.vscode/
 
-_site
-.sass-cache
-.jekyll-metadata
+# Ignore all Node.js and NPM related paths
+/npm-debug.log
+/node_modules/
+
+# Ignore build files
+/.cache/
+/public/
