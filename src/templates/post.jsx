@@ -50,6 +50,11 @@ const PostBody = styled("div")`
       width: 100%;
     }
   }
+
+  a {
+    color: ${colors.blue700};
+    text-decoration: underline;
+  }
 `
 
 const PostMetas = styled("div")`

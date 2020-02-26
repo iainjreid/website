@@ -56,7 +56,7 @@ const typeStyles = css`
     line-height: 1.9;
   }
 
-  a :not(> .PostBody){
+  a {
     text-decoration: none;
     color: currentColor;
 
