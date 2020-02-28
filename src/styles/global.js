@@ -21,7 +21,7 @@ const globalStyles = css`
     width: 100%;
     margin: 0 auto;
     font-size: 16px;
-    line-height: 1.5;
+    line-height: 1.7;
     color: ${colors.grey900};
     -webkit-font-smoothing: antialiased;
 
