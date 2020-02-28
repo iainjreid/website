@@ -181,8 +181,8 @@ const RenderBody = ({ home, projects, meta }) => (
       </ProjectAction>
     </Section>
     <Section>
-      <h3>{home.about_title}</h3>
-      <About bio={home.about_bio} socialLinks={home.about_links} />
+      <h3>Abount</h3>
+      <About socialLinks={home.about_links} />
     </Section>
   </>
 )
@@ -193,8 +193,6 @@ export default ({ data }) => {
 
   const doc = {
     node: {
-      about_title: "About",
-      about_bio: "about_bio",
       about_links: {
         Github: `https://github.com/${meta.social.github}/`,
         LinkedIn: `https://www.linkedin.com/in/${meta.social.linkedin}/`,

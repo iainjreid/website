@@ -63,7 +63,7 @@ const AboutBio = styled("div")`
   }
 `
 
-export default ({ bio, socialLinks }) => (
+export default ({ socialLinks }) => (
   <AboutContainer>
     <AboutLinkContainer>
       {Object.entries(socialLinks).map(([provider, url], i) => (
@@ -73,6 +73,9 @@ export default ({ bio, socialLinks }) => (
         </AboutLink>
       ))}
     </AboutLinkContainer>
-    <AboutBio>{bio}</AboutBio>
+    <AboutBio>
+      <p>A little about me — my name is Iain, although I often go by Chaff, or variations on that in a few online communities. I'm a programmer by trade, living and working in London.</p>
+      <p>I'm a huge geek if you haven't already gathered from this site, some people have said I have too many keyboards, I've no idea what they're on about.</p>
+    </AboutBio>
   </AboutContainer>
 )
