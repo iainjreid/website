@@ -17,7 +17,6 @@ const FooterAuthor = styled("a")`
   align-items: center;
   text-decoration: none;
   margin-top: 1.5em;
-  transition: color 150ms ease;
 
   &:hover {
     color: ${colors.blue900};
@@ -26,7 +25,7 @@ const FooterAuthor = styled("a")`
 
 export default () => (
   <FooterContainer>
-    <FooterAuthor href="https://iainreid820.github.io">
+    <FooterAuthor href="https://github.com/iainreid820/iainreid820.github.io" target="_blank" rel="noopener">
       © {new Date().getFullYear()} — Built by Iain Reid
     </FooterAuthor>
   </FooterContainer>
