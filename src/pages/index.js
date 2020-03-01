@@ -181,7 +181,7 @@ const RenderBody = ({ home, projects, meta }) => (
       </ProjectAction>
     </Section>
     <Section>
-      <h3>Abount</h3>
+      <h3>About</h3>
       <About socialLinks={home.about_links} />
     </Section>
   </>
