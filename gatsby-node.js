@@ -29,7 +29,7 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
 
-        howTo: allMarkdownRemark {
+        howTo: allMarkdownRemark(filter: {frontmatter: {collection: {eq: "How To"}}}) {
           topics: group(field: frontmatter___category) {
             totalCount
             languageName: fieldValue
