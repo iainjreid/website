@@ -19,6 +19,7 @@ const HeaderLinks = styled("div")`
   display: flex;
   justify-content: flex-end;
   width: 100%;
+  grid-gap: 6.5em;
 
   @media (max-width: ${dimensions.maxwidthTablet}px) {
     grid-gap: 5.5em;
@@ -40,10 +41,6 @@ const HeaderLinks = styled("div")`
     display: block;
     position: relative;
     line-height: 3em;
-
-    & + a {
-      margin-left: 6em;
-    }
 
     &:after {
       position: absolute;
