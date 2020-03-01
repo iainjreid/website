@@ -16,10 +16,9 @@ const HeaderContent = styled("div")`
 `
 
 const HeaderLinks = styled("div")`
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
+  display: grid;
   grid-gap: 6.5em;
+  grid-template-columns: repeat(3, auto);
 
   @media (max-width: ${dimensions.maxwidthTablet}px) {
     grid-gap: 5.5em;
