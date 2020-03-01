@@ -9,7 +9,7 @@ category: JavaScript
 featuredImage:
   sourceUrl: https://images.unsplash.com/photo-1517255666489-db1d2c54d083
   sourceName: Unsplash
-  reditUrl: https://unsplash.com/@fbazanegue
+  creditUrl: https://unsplash.com/@fbazanegue
   creditName: Fabien Bazanegue
 ---
 
