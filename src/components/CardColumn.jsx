@@ -129,9 +129,9 @@ export default ({ category, title, description, date, thumbnail, actionText }) =
       {date && <CardDate>
         <Moment format="MMMM D, YYYY">{date}</Moment>
       </CardDate>}
-      <CardAction className="CardAction">
+      {actionText && <CardAction className="CardAction">
         {actionText} <span>&#8594;</span>
-      </CardAction>
+      </CardAction>}
     </CardContent>
     {thumbnail && <CardImageContainer className="CardImageContainer">
       <Img fluid={thumbnail} alt={title} />

@@ -3,10 +3,8 @@ import Layout from "../components/Layout"
 import Title from "../components/Title"
 
 export default () => <>
-  <Title text="404" />
-
   <Layout>
-    <h1>NOT FOUND</h1>
-    <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
+    <Title text="Oops" />
+    <p>Looks like there's nothing here…</p>
   </Layout>
 </>

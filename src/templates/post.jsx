@@ -79,10 +79,9 @@ const PostDate = styled("div")`
 
 export default ({ data, pageContext }) => {
   const post = data.markdownRemark
-  const meta = data.site.siteMetadata
 
   return <>
-    <SEO title={post.frontmatter.title} slug={pageContext.slug} />
+    <SEO slug={pageContext.slug} />
     <Layout>
       <PostTitle>
         <Title text={post.frontmatter.title} />

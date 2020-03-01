@@ -24,6 +24,7 @@ exports.createPages = async ({ graphql, actions }) => {
               }
               frontmatter {
                 title
+                draft
               }
             }
           }
@@ -34,6 +35,9 @@ exports.createPages = async ({ graphql, actions }) => {
             totalCount
             languageName: fieldValue
             articles: nodes {
+              frontmatter {
+                draft
+              }
               fields {
                 slug
               }
@@ -51,6 +55,10 @@ exports.createPages = async ({ graphql, actions }) => {
   const howToTopicTemplate = require.resolve('./src/templates/how-to-topic.jsx');
 
   postsList.forEach((post) => {
+    if (post.node.frontmatter.draft && process.env.NODE_ENV !== "development") {
+      return;
+    }
+
     createPage({
       path: `/blog${post.node.fields.slug}`,
       component: postTemplate,
@@ -70,6 +78,10 @@ exports.createPages = async ({ graphql, actions }) => {
     });
 
     topic.articles.forEach((article) => {
+      if (article.frontmatter.draft && process.env.NODE_ENV !== "development") {
+        return;
+      }
+
       createPage({
         path: `/how-to/${topic.languageName.toLowerCase()}${article.fields.slug}`,
         component: postTemplate,

@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "@emotion/styled"
 import colors from "../styles/colors"
+import { graphql, StaticQuery } from 'gatsby'
 
 const FooterContainer = styled("footer")`
   padding-top: 3.75em;
@@ -24,9 +25,25 @@ const FooterAuthor = styled("a")`
 `
 
 export default () => (
-  <FooterContainer>
-    <FooterAuthor href="https://github.com/iainreid820/iainreid820.github.io" target="_blank" rel="noopener">
-      © {new Date().getFullYear()} — Built by Iain Reid
-    </FooterAuthor>
-  </FooterContainer>
+  <StaticQuery
+    query={graphql`
+      query {
+        site {
+          siteMetadata {
+            author
+            social {
+              github
+            }
+          }
+        }
+      }
+    `}
+    render={({ site }) => (
+      <FooterContainer>
+        <FooterAuthor href={`https://github.com/${site.siteMetadata.social.github}`} target="_blank" rel="noopener">
+          © {new Date().getFullYear()} — Built by {site.siteMetadata.author}
+        </FooterAuthor>
+      </FooterContainer>
+    )}
+  />
 )
