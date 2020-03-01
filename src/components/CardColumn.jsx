@@ -13,6 +13,7 @@ const CardContainer = styled("div")`
   margin-bottom: 4em;
   box-shadow: 0px 9px 17px rgba(0, 0, 0, 0.04);
   transition: all 150ms ease-in-out;
+  overflow: hidden;
 
   @media (max-width: ${dimensions.maxwidthTablet}px) {
     display: block
