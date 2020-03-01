@@ -119,8 +119,7 @@ const RenderBody = ({ home, projects, meta }) => (
   <>
     <Hero>
       <h1>
-        Hi there! I'm Iain, I <a href="https://github.com/iainreid820" target="_blank" rel="noopener noreferrer">write code</a>,
-        make generative art, and <a href="https://twitch.tv/chaffity" target="_blank" rel="noopener noreferrer">play games</a>
+        Hi there, you've landed on my website which is a work in progress right now, but please, do explore…
       </h1>
     </Hero>
     <Section>
