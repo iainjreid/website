@@ -4,13 +4,15 @@ import Grid from "../components/Grid"
 import Layout from "../components/Layout"
 import CardTile from "../components/CardTile"
 import Title from "../components/Title"
+import SEO from "../components/SEO"
 
 export default ({ data }) => {
   const languages = data.allMarkdownRemark.group.sort((a, b) => a.totalCount < b.totalCount)
 
-  return (
+  return <>
+    <SEO slug="/how-to" />
     <Layout>
-      <Title>How To</Title>
+      <Title text="How To"></Title>
       <Grid width="4">
         {languages.map((language, i) => (
           <Link key={i} to={`how-to/${language.fieldValue.toLowerCase()}`}>
@@ -23,7 +25,7 @@ export default ({ data }) => {
         ))}
       </Grid>
     </Layout>
-  )
+  </>
 }
 
 export const pageQuery = graphql`

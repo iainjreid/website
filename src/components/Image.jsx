@@ -7,7 +7,7 @@ const ImageBlock = styled(Img)`
   border-radius: 3px;
 `
 
-const ImageAnnotation = styled("div")`
+const ImageAttribution = styled("a")`
   color: ${colors.grey600};
   padding-top: 0.5em;
   margin: 0 auto;
@@ -27,9 +27,7 @@ const ImageAnnotation = styled("div")`
 
 export default ({ image }) => <>
   <ImageBlock fluid={image.sourceUrl.childImageSharp.fluid} />
-  <ImageAnnotation>
-  <a href={image.creditUrl} target="_blank" rel="noopener noreferrer">
+  <ImageAttribution href={image.creditUrl} target="_blank" rel="noopener noreferrer">
     <h6>Photo by {image.creditName} — {image.sourceName}</h6>
-  </a>
-  </ImageAnnotation>
+  </ImageAttribution>
 </>

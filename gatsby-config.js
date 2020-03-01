@@ -1,9 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: "Iain's space",
-    author: "Iain Reid",
-    description: "Personal blog by Iain Reid.",
-    siteUrl: "https://iainreid820.github.io/",
+    title: "Chaff Land",
+    author: "Iain J. Reid",
+    description: "Personal site of Iain J. Reid.",
+    siteUrl: "https://chaff.land",
     social: {
       github: "iainreid820",
       linkedin: "iainreid194",

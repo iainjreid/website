@@ -10,7 +10,7 @@ export default ({ data }) => {
 
   return (
     <Layout>
-      <Title>Projects</Title>
+      <Title text="Projects" />
       <Grid>
         {projects.map((project, i) => (
           <a key={i} href={project.node.url} target="_blank" rel="noopener noreferrer">

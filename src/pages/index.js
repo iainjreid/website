@@ -1,5 +1,4 @@
 import React from "react"
-import Helmet from "react-helmet"
 import styled from "@emotion/styled"
 import { graphql, Link } from "gatsby"
 import About from "../components/About"
@@ -118,44 +117,6 @@ const ProjectAction = styled(Link)`
 
 const RenderBody = ({ home, projects, meta }) => (
   <>
-    <Helmet
-      title={meta.title}
-      titleTemplate={`%s | ${meta.title}`}
-      meta={[
-        {
-          name: "description",
-          content: meta.description,
-        },
-        {
-          property: "og:title",
-          content: meta.title,
-        },
-        {
-          property: "og:description",
-          content: meta.description,
-        },
-        {
-          property: "og:type",
-          content: "website",
-        },
-        {
-          name: "twitter:card",
-          content: "summary",
-        },
-        {
-          name: "twitter:creator",
-          content: meta.author,
-        },
-        {
-          name: "twitter:title",
-          content: meta.title,
-        },
-        {
-          name: "twitter:description",
-          content: meta.description,
-        },
-      ].concat(meta)}
-    />
     <Hero>
       <h1>
         Hi there! I'm Iain, I <a href="https://github.com/iainreid820" target="_blank" rel="noopener noreferrer">write code</a>,

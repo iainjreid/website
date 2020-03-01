@@ -1,10 +1,11 @@
 import React from "react"
-import Helmet from "react-helmet"
 import Moment from "react-moment"
 import { graphql } from "gatsby"
 import styled from "@emotion/styled"
 import Image from "../components/Image"
 import Layout from "../components/Layout"
+import SEO from "../components/SEO"
+import Title from "../components/Title"
 import colors from "../styles/colors"
 
 const PostHeroContainer = styled("div")`
@@ -33,7 +34,7 @@ const PostCategory = styled("div")`
   }
 `
 
-const PostTitle = styled("h1")`
+const PostTitle = styled("div")`
   max-width: 680px;
   margin: 0 auto 1em;
 `
@@ -76,51 +77,16 @@ const PostDate = styled("div")`
   margin: 0;
 `
 
-export default ({ data }) => {
+export default ({ data, pageContext }) => {
   const post = data.markdownRemark
   const meta = data.site.siteMetadata
 
   return <>
-    <Helmet
-      title={`${post.frontmatter.title} | Iain`}
-      titleTemplate={`%s | ${meta.title}`}
-      meta={[
-        {
-          name: "description",
-          content: meta.description,
-        },
-        {
-          property: "og:title",
-          content: `${post.frontmatter.title} | Iain`,
-        },
-        {
-          property: "og:description",
-          content: meta.description,
-        },
-        {
-          property: "og:type",
-          content: "website",
-        },
-        {
-          name: "twitter:card",
-          content: "summary",
-        },
-        {
-          name: "twitter:creator",
-          content: meta.author,
-        },
-        {
-          name: "twitter:title",
-          content: meta.title,
-        },
-        {
-          name: "twitter:description",
-          content: meta.description,
-        },
-      ].concat(meta)}
-    />
+    <SEO title={post.frontmatter.title} slug={pageContext.slug} />
     <Layout>
-      <PostTitle>{post.frontmatter.title}</PostTitle>
+      <PostTitle>
+        <Title text={post.frontmatter.title} />
+      </PostTitle>
       {/* <PostCategory>{post.frontmatter.category}</PostCategory> */}
       <PostMetas>
         <PostDate>
