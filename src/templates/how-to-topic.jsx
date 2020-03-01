@@ -24,7 +24,7 @@ export default ({ data, pathContext }) => (
 
 export const pageQuery = graphql`
   query HowToQuery($topic: String) {
-    articles: allMarkdownRemark(filter: {frontmatter: {category: {eq: $topic}, collection: {eq: "How To"}}}) {
+    articles: allMarkdownRemark(filter: {frontmatter: {category: {eq: $topic}, collection: {eq: "How To"}, draft: {eq: false}}}) {
       nodes {
         frontmatter {
           title

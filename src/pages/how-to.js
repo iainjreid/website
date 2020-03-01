@@ -28,7 +28,7 @@ export default ({ data }) => {
 
 export const pageQuery = graphql`
   query {
-    allMarkdownRemark(filter: {frontmatter: {collection: {eq: "How To"}}}) {
+    allMarkdownRemark(filter: {frontmatter: {collection: {eq: "How To"}, draft: {eq: false}}}) {
       group(field: frontmatter___category) {
         totalCount
         fieldValue

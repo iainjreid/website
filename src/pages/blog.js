@@ -73,7 +73,7 @@ export default ({ data }) => {
 
 export const pageQuery = graphql`
   query {
-    allPosts: allMarkdownRemark(sort: {fields: [frontmatter___date], order: DESC}) {
+    allPosts: allMarkdownRemark(filter: {frontmatter: {draft: {eq: false}}}, sort: {fields: [frontmatter___date], order: DESC}) {
       edges {
         node {
           frontmatter {
