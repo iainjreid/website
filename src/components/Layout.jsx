@@ -38,11 +38,11 @@ const LayoutContainer = styled.div`
   }
 `
 
-export default ({ children }) => (
-  <LayoutContainer className="div">
+export default ({ children, title, titleMeta, crumbs }) => (
+  <LayoutContainer>
     <Global styles={[globalStyles, typography]} />
     <div className="Layout">
-      <Header />
+      <Header title={title} titleMeta={titleMeta} crumbs={crumbs} />
       <main className="Layout__content">{children}</main>
       <Footer />
     </div>

@@ -2,6 +2,7 @@ import React from "react"
 import styled from "@emotion/styled"
 import colors from "../styles/colors"
 import { graphql, StaticQuery } from 'gatsby'
+import Logo from "./_ui/Logo"
 
 const FooterContainer = styled("footer")`
   padding-top: 3.75em;
@@ -40,6 +41,7 @@ export default () => (
     `}
     render={({ site }) => (
       <FooterContainer>
+        <Logo />
         <FooterAuthor href={`https://github.com/${site.siteMetadata.social.github}`} target="_blank" rel="noopener">
           © {new Date().getFullYear()} — Built by {site.siteMetadata.author}
         </FooterAuthor>

@@ -5,7 +5,6 @@ import styled from "@emotion/styled"
 import Image from "../components/Image"
 import Layout from "../components/Layout"
 import SEO from "../components/SEO"
-import Title from "../components/Title"
 import colors from "../styles/colors"
 
 const PostHeroContainer = styled("div")`
@@ -34,11 +33,6 @@ const PostCategory = styled("div")`
   }
 `
 
-const PostTitle = styled("div")`
-  max-width: 680px;
-  margin: 0 auto 1em;
-`
-
 const PostBody = styled("div")`
   max-width: 680px;
   margin: 0 auto;
@@ -60,10 +54,9 @@ const PostBody = styled("div")`
 
 const PostMetas = styled("div")`
   max-width: 680px;
-  margin: 0 auto;
+  margin-left: 0;
   display: flex;
   align-items: center;
-  margin-bottom: 2em;
   justify-content: space-between;
   font-size: 0.85em;
   color: ${colors.grey600};
@@ -82,17 +75,18 @@ export default ({ data, pageContext }) => {
 
   return <>
     <SEO slug={pageContext.slug} />
-    <Layout>
-      <PostTitle>
-        <Title text={post.frontmatter.title} />
-      </PostTitle>
+    <Layout
+      title={post.frontmatter.title}
+      titleMeta={
+        <PostMetas>
+          <PostDate>
+            Written <Moment format="MMMM D, YYYY">{post.frontmatter.date}</Moment>
+          </PostDate>
+        </PostMetas>
+      }
+      crumbs={pageContext.breadcrumb.crumbs}
+    >
       {/* <PostCategory>{post.frontmatter.category}</PostCategory> */}
-      <PostMetas>
-        <PostDate>
-          Written <Moment format="MMMM D, YYYY">{post.frontmatter.date}</Moment>
-        </PostDate>
-        {/* <PostReadingTime>{post.timeToRead}</PostReadingTime> */}
-      </PostMetas>
       {post.frontmatter.featuredImage && (
         <PostHeroContainer>
           <Image image={post.frontmatter.featuredImage} />

@@ -3,14 +3,12 @@ import { graphql } from "gatsby"
 import Grid from "../components/Grid"
 import Layout from "../components/Layout"
 import CardTile from "../components/CardTile"
-import Title from "../components/Title"
 
-export default ({ data }) => {
+export default ({ data, pathContext }) => {
   const projects = data.github.user.repositories.edges
 
   return (
-    <Layout>
-      <Title text="Projects" />
+    <Layout title="Projects" crumbs={pathContext.breadcrumb.crumbs}>
       <Grid>
         {projects.map((project, i) => (
           <a key={i} href={project.node.url} target="_blank" rel="noopener noreferrer">

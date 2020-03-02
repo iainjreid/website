@@ -18,7 +18,7 @@ module.exports = {
     {
       resolve: "gatsby-source-filesystem",
       options: {
-        name: `posts`,
+        name: "posts",
         path: `${__dirname}/content/posts/`,
       },
     },
@@ -54,6 +54,27 @@ module.exports = {
     },
 
     {
+      resolve: "gatsby-plugin-breadcrumb",
+      options: {
+        useAutoGen: true,
+        crumbLabelUpdates: [
+          {
+            pathname: "/blog",
+            crumbLabel: "Blog"
+          },
+          {
+            pathname: "/how-to",
+            crumbLabel: "How To"
+          },
+          {
+            pathname: "/how-to/javascript",
+            crumbLabel: "JavaScript"
+          },
+        ],
+      }
+     },
+
+    {
       resolve: "gatsby-plugin-google-analytics",
       options: {
         trackingId: "UA-89438965-1",
@@ -69,6 +90,7 @@ module.exports = {
 
     "gatsby-transformer-sharp",
     "gatsby-plugin-catch-links",
+    "gatsby-plugin-cname",
     "gatsby-plugin-emotion",
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-sharp",

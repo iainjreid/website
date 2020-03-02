@@ -1,32 +1,17 @@
 import React from "react"
 import { Link } from "gatsby"
+import { Breadcrumb } from "gatsby-plugin-breadcrumb"
 import styled from "@emotion/styled"
-import Logo from "./_ui/Logo"
 import colors from "../styles/colors"
 import dimensions from "../styles/dimensions"
+import Title from "./Title"
 
 const HeaderContainer = styled("header")`
   padding-top: 3em;
   padding-bottom: 3em;
-`
-
-const HeaderContent = styled("div")`
-  display: flex;
-  justify-content: space-between;
-`
-
-const HeaderLinks = styled("div")`
   display: grid;
-  grid-gap: 6.5em;
-  grid-template-columns: repeat(3, auto);
-
-  @media (max-width: ${dimensions.maxwidthTablet}px) {
-    grid-gap: 5.5em;
-  }
-
-  @media (max-width: ${dimensions.maxwidthMobile}px) {
-    grid-gap: 2.5em;
-  }
+  grid-template-areas: "nav"
+                       "title";
 
   a {
     color: currentColor;
@@ -40,7 +25,86 @@ const HeaderLinks = styled("div")`
     display: block;
     position: relative;
     line-height: 3em;
+  }
+`
 
+const HeaderNavigation = styled("div")`
+  display: grid;
+  grid-area: nav;
+  grid-template-areas: "breadcrumbs links";
+`
+
+const HeaderBreadcrumbs = styled("div")`
+  grid-area: breadcrumbs;
+
+  ol {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    span {
+      display: none;
+    }
+
+    li {
+      display: grid;
+      grid-gap: 1em;
+      grid-template-columns: repeat(2, auto);
+      color: ${colors.grey700};
+      transition: all 150ms ease-in-out;
+
+      &:after {
+        content: "\u2192";
+        margin-right: 1em;
+        opacity: 0;
+        transform: translateX(-8px);
+        transition: all 150ms ease-in-out;
+        position: relative;
+        top: 0.75em;
+      }
+
+      &:hover {
+        color: ${colors.blue500};
+        padding-right: 8px;
+
+        &:after {
+          opacity: 1;
+          transform: translateX(0px);
+        }
+      }
+
+      &:last-child {
+        display: none;
+      }
+    }
+
+    @media (max-width: ${dimensions.maxwidthDesktop}px) {
+      li:not(:nth-of-type(1)) {
+        display: none;
+      }
+    }
+  }
+`
+
+const HeaderLinks = styled("div")`
+  display: grid;
+  grid-area: links;
+  grid-gap: 6.5em;
+  grid-template-columns: repeat(3, auto);
+  margin-left: auto;
+  width: max-content;
+
+  @media (max-width: ${dimensions.maxwidthTablet}px) {
+    grid-gap: 5.5em;
+  }
+
+  @media (max-width: ${dimensions.maxwidthMobile}px) {
+    grid-gap: 2.5em;
+  }
+
+  a {
     &:after {
       position: absolute;
       content: "";
@@ -49,31 +113,43 @@ const HeaderLinks = styled("div")`
       height: 3px;
       right: 50%;
       margin-right: -9px;
-      transition: 100ms ease-in-out background;
+      transition: background 100ms ease-in-out;
     }
 
-    &:hover {
+    &:hover, &.Link--is-active {
       &:after {
         background: ${colors.blue500};
-        transition: 100ms ease-in-out background;
-      }
-    }
-
-    &.Link--is-active {
-      &:after {
-        background: ${colors.blue500};
-        transition: 100ms ease-in-out background;
+        transition: background 100ms ease-in-out;
       }
     }
   }
 `
 
-export default () => (
+const HeaderTitle = styled("div")`
+  grid-area: title;
+  margin: 0 auto;
+  width: 100%;
+  flex: 1;
+
+  @media (min-width: ${dimensions.maxwidthDesktop * 1.1}px) {
+    max-width: calc(100% - ((100% - ${dimensions.maxwidthDesktop}px * 1.1) * 0.9));
+  }
+`
+
+const HeaderMetas = styled("div")`
+  margin-top: -2em;
+`
+
+export default ({ title, titleMeta, crumbs }) => (
   <HeaderContainer>
-    <HeaderContent>
-      <Link to="/">
-        <Logo />
-      </Link>
+    <HeaderNavigation>
+      <HeaderBreadcrumbs>
+        <Breadcrumb
+          crumbs={crumbs || []}
+          crumbSeparator=""
+          crumbLabel={title}
+        />
+      </HeaderBreadcrumbs>
       <HeaderLinks>
         <Link activeClassName="Link--is-active" to="/blog" partiallyActive>
           Blog
@@ -85,6 +161,12 @@ export default () => (
           Projects
         </Link>
       </HeaderLinks>
-    </HeaderContent>
+    </HeaderNavigation>
+    <HeaderTitle>
+      <Title text={title} className={titleMeta ? "shrink" : ""}/>
+      <HeaderMetas>
+        {titleMeta}
+      </HeaderMetas>
+    </HeaderTitle>
   </HeaderContainer>
 )

@@ -2,7 +2,6 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 import CardColumn from "../components/CardColumn"
 import Layout from "../components/Layout"
-import Title from "../components/Title"
 import styled from "@emotion/styled"
 
 const Disabled = styled("div")`
@@ -10,13 +9,12 @@ const Disabled = styled("div")`
   pointer-events: none;
 `
 
-export default ({ data, pathContext }) => (
-  <Layout>
-    <Title>{pathContext.topic}</Title>
+export default ({ data, pageContext }) => (
+  <Layout title={pageContext.topic} crumbs={pageContext.breadcrumb.crumbs}>
     {data.articles.nodes.map((article, i) => (
       !article.frontmatter.draft
         ? (
-          <Link key={i} to={`/how-to/${pathContext.topic.toLowerCase()}/${article.fields.slug}`}>
+          <Link key={i} to={`/how-to/${pageContext.topic.toLowerCase()}/${article.fields.slug}`}>
             <CardColumn
               title={article.frontmatter.title}
               date={article.frontmatter.date}

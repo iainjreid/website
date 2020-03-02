@@ -16,7 +16,7 @@ const CardContainer = styled("div")`
   overflow: hidden;
 
   @media (max-width: ${dimensions.maxwidthTablet}px) {
-    display: block
+    display: block;
   }
 
   @media (max-width: ${dimensions.maxwidthMobile}px) {
