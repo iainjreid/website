@@ -10,8 +10,20 @@ const HeaderContainer = styled("header")`
   padding-top: 3em;
   padding-bottom: 3em;
   display: grid;
+
   grid-template-areas: "nav"
                        "title";
+
+  &.cover {
+    grid-template-rows: min-content auto;
+    min-height: 100vh;
+  }
+`
+
+const HeaderNavigation = styled("div")`
+  display: grid;
+  grid-area: nav;
+  grid-template-areas: "breadcrumbs links";
 
   a {
     color: currentColor;
@@ -26,12 +38,6 @@ const HeaderContainer = styled("header")`
     position: relative;
     line-height: 3em;
   }
-`
-
-const HeaderNavigation = styled("div")`
-  display: grid;
-  grid-area: nav;
-  grid-template-areas: "breadcrumbs links";
 `
 
 const HeaderBreadcrumbs = styled("div")`
@@ -132,16 +138,12 @@ const HeaderTitle = styled("div")`
   flex: 1;
 
   @media (min-width: ${dimensions.maxwidthDesktop * 1.1}px) {
-    max-width: calc(100% - ((100% - ${dimensions.maxwidthDesktop}px * 1.1) * 0.9));
+    max-width: calc(100% - (100% - ${dimensions.maxwidthDesktop}px * 1.1) * 0.9);
   }
 `
 
-const HeaderMetas = styled("div")`
-  margin-top: -2em;
-`
-
-export default ({ title, titleMeta, crumbs }) => (
-  <HeaderContainer>
+export default ({ children, title, crumbs, cover }) => (
+  <HeaderContainer className={cover ? "cover" : ""}>
     <HeaderNavigation>
       <HeaderBreadcrumbs>
         <Breadcrumb
@@ -163,10 +165,11 @@ export default ({ title, titleMeta, crumbs }) => (
       </HeaderLinks>
     </HeaderNavigation>
     <HeaderTitle>
-      <Title text={title} className={titleMeta ? "shrink" : ""}/>
+      {/* <Title text={title} className={titleMeta ? "shrink" : ""}/>
       <HeaderMetas>
         {titleMeta}
-      </HeaderMetas>
+      </HeaderMetas> */}
+      {children}
     </HeaderTitle>
   </HeaderContainer>
 )

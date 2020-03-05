@@ -5,6 +5,9 @@ import dimensions from "../styles/dimensions"
 const typeStyles = css`
   html {
     font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    word-spacing: 0.03em;
+    letter-spacing: -0.016em;
   }
 
   @supports (font-variation-settings: normal) {
@@ -54,6 +57,8 @@ const typeStyles = css`
 
   p {
     line-height: 1.9;
+    word-spacing: 0em;
+    letter-spacing: 0em;
   }
 
   a {

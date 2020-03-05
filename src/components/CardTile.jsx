@@ -35,7 +35,6 @@ const CardCategory = styled("h6")`
 const CardTitle = styled("h3")`
   margin: 0;
   margin-top: 0.5em;
-  flex: 1;
 `
 
 const CardMetas = styled("div")`
@@ -47,7 +46,7 @@ const CardMetas = styled("div")`
   color: ${colors.grey600};
 `
 
-const CardAuthor = styled("div")`
+const CardAuthor = styled("p")`
   margin: 0;
 `
 
@@ -55,14 +54,10 @@ const CardDate = styled("div")`
   margin: 0;
 `
 
-const CardDescription = styled("div")`
+const CardDescription = styled("p")`
   margin-top: 2em;
   margin-bottom: 2em;
   flex: 2;
-
-  p:last-of-type {
-    margin: 0;
-  }
 `
 
 const CardAction = styled("div")`

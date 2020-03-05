@@ -7,19 +7,23 @@ import Layout from "../components/Layout"
 import CardTile from "../components/CardTile"
 import colors from "../styles/colors"
 import dimensions from "../styles/dimensions"
+import Stats from "../components/Stats"
 
-const Hero = styled("div")`
-  padding-top: 2.5em;
-  padding-bottom: 3em;
-  margin-bottom: 6em;
-  max-width: 830px;
+const Heading = styled("div")`
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
 
-  @media (max-width: ${dimensions.maxwidthMobile}px) {
-    margin-bottom: 3em;
+  > * {
+    margin: auto 0;
   }
 
   h1 {
-    margin-bottom: 1em;
+    line-height: 1.6em;
+    background-color: white;
+    color: black;
+    display: inline;
+    max-width: 990px;
 
     a {
       text-decoration: none;
@@ -115,58 +119,68 @@ const ProjectAction = styled(Link)`
   }
 `
 
-const RenderBody = ({ home, projects, meta }) => (
-  <>
-    <Hero>
-      <h1>
-        Hi there, you've landed on my website which is a work in progress right now, but please, do explore…
-      </h1>
-    </Hero>
-    <Section>
-      <SectionHeading>Current Projects</SectionHeading>
-      <Grid>
-        {projects.map((project, i) => (
-          <a key={i} href={project.node.url} target="_blank" rel="noopener noreferrer">
-            <CardTile
-              category={project.node.primaryLanguage.name}
-              title={project.node.name}
-              description={project.node.description}
-              actionText="Checkout"
-            />
-          </a>
-        ))}
-      </Grid>
-      <ProjectAction to={"/projects"}>
-        View more projects <span>&#8594;</span>
-      </ProjectAction>
-    </Section>
-    <Section>
-      <h3>About</h3>
-      <About socialLinks={home.about_links} />
-    </Section>
-  </>
-)
-
 export default ({ data }) => {
   const projects = data.github.user.pinnedItems.edges
   const meta = data.site.siteMetadata
 
-  const doc = {
-    node: {
-      about_links: {
-        Github: `https://github.com/${meta.social.github}/`,
-        LinkedIn: `https://www.linkedin.com/in/${meta.social.linkedin}/`,
-        Twitter: `https://twitter.com/${meta.social.twitter}/`,
-        Instagram: `https://instagram.com/${meta.social.instagram}/`,
-      },
+  const home = {
+    about_links: {
+      Github: `https://github.com/${meta.social.github}/`,
+      LinkedIn: `https://www.linkedin.com/in/${meta.social.linkedin}/`,
+      Twitter: `https://twitter.com/${meta.social.twitter}/`,
+      Instagram: `https://instagram.com/${meta.social.instagram}/`,
     },
   }
 
-  if (!doc || !projects) return null
+  const userStats = data.github.user.repositories.edges.reduce((stats, { node: { languages, owner }}) => {
+    if (owner.login !== "iainreid820") {
+      return stats;
+    }
+
+    for (const { node: { name, color }, size } of languages.edges) {
+      size = Math.log(size);
+
+      if (!stats[name]) {
+        stats[name] = { name, color, size }
+      } else {
+        stats[name].size += size
+      }
+    }
+
+    return stats
+  }, {});
 
   return (
-    <Layout>
-      <RenderBody home={doc.node} projects={projects} meta={meta} />
+    <Layout cover title={
+      <Heading>
+        <h1>
+          Frontend programmer, sometimes a backend programmer — often <a href={home.about_links.Github} target="_blank" rel="noopener noreferrer">open source</a> 👨‍💻
+        </h1>
+        <Stats languages={Object.values(userStats).sort((a, b) => a.size < b.size)} />
+      </Heading>
+    }>
+      <Section>
+        <SectionHeading>Current Projects</SectionHeading>
+        <Grid>
+          {projects.map((project, i) => (
+            <a key={i} href={project.node.url} target="_blank" rel="noopener noreferrer">
+              <CardTile
+                category={project.node.primaryLanguage.name}
+                title={project.node.name}
+                description={project.node.description}
+                actionText="Checkout"
+              />
+            </a>
+          ))}
+        </Grid>
+        <ProjectAction to={"/projects"}>
+          View more projects <span>&#8594;</span>
+        </ProjectAction>
+      </Section>
+      <Section>
+        <h3>About</h3>
+        <About socialLinks={home.about_links} />
+      </Section>
     </Layout>
   )
 }
@@ -188,6 +202,24 @@ export const pageQuery = graphql`
                 primaryLanguage {
                   name
                 }
+              }
+            }
+          }
+        }
+        repositories(first: 100, orderBy: {field: UPDATED_AT, direction: DESC}) {
+          edges {
+            node {
+              languages(first: 100) {
+                edges {
+                  node {
+                    name
+                    color
+                  }
+                  size
+                }
+              }
+              owner {
+                login
               }
             }
           }

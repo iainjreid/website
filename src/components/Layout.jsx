@@ -7,7 +7,7 @@ import dimensions from "../styles/dimensions"
 import globalStyles from "../styles/global"
 import typography from "../styles/typography"
 
-const LayoutContainer = styled.div`
+const LayoutContainer = styled("div")`
   padding-left: ${dimensions.paddingHorizontalDesktop}em;
   padding-right: ${dimensions.paddingHorizontalDesktop}em;
 
@@ -38,11 +38,11 @@ const LayoutContainer = styled.div`
   }
 `
 
-export default ({ children, title, titleMeta, crumbs }) => (
+export default ({ children, title, crumbs, cover }) => (
   <LayoutContainer>
     <Global styles={[globalStyles, typography]} />
     <div className="Layout">
-      <Header title={title} titleMeta={titleMeta} crumbs={crumbs} />
+      <Header crumbs={crumbs} cover={cover}>{title}</Header>
       <main className="Layout__content">{children}</main>
       <Footer />
     </div>

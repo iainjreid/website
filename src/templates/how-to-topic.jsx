@@ -3,6 +3,7 @@ import { Link, graphql } from "gatsby"
 import CardColumn from "../components/CardColumn"
 import Layout from "../components/Layout"
 import styled from "@emotion/styled"
+import Title from "../components/Title"
 
 const Disabled = styled("div")`
   opacity: 0.8;
@@ -10,7 +11,9 @@ const Disabled = styled("div")`
 `
 
 export default ({ data, pageContext }) => (
-  <Layout title={pageContext.topic} crumbs={pageContext.breadcrumb.crumbs}>
+  <Layout title={
+    <Title text={pageContext.topic} />
+  } crumbs={pageContext.breadcrumb.crumbs}>
     {data.articles.nodes.map((article, i) => (
       !article.frontmatter.draft
         ? (

@@ -3,17 +3,21 @@ import { graphql, Link } from "gatsby"
 import styled from "@emotion/styled"
 import CardColumn from "../components/CardColumn"
 import Layout from "../components/Layout"
+import Title from "../components/Title"
 
 const Disabled = styled("div")`
   opacity: 0.8;
   pointer-events: none;
 `
 
-export default ({ data, pathContext }) => {
+export default ({ data, pageContext }) => {
   const posts = data.allPosts.edges
 
   return (
-    <Layout title="Blog" crumbs={pathContext.breadcrumb.crumbs}>
+    <Layout
+      title={<Title text="Blog" />}
+      crumbs={pageContext.breadcrumb.crumbs}
+    >
       {posts.map((post, i) => (
         !post.node.frontmatter.draft
           ? (
