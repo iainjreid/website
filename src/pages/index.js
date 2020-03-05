@@ -137,7 +137,7 @@ export default ({ data }) => {
       return stats;
     }
 
-    for (const { node: { name, color }, size } of languages.edges) {
+    for (let { node: { name, color }, size } of languages.edges) {
       size = Math.log(size);
 
       if (!stats[name]) {
