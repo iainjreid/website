@@ -12,7 +12,6 @@ import Stats from "../components/Stats"
 const Heading = styled("div")`
   height: 100%;
   display: grid;
-  grid-template-rows: 1fr 1fr;
 
   > * {
     margin: auto 0;
@@ -156,7 +155,7 @@ export default ({ data }) => {
         <h1>
           Frontend programmer, sometimes a backend programmer — often <a href={home.about_links.Github} target="_blank" rel="noopener noreferrer">open source</a> 👨‍💻
         </h1>
-        <Stats languages={Object.values(userStats).sort((a, b) => a.size < b.size)} />
+        {/* <Stats languages={Object.values(userStats).sort((a, b) => a.size < b.size)} /> */}
       </Heading>
     }>
       <Section>

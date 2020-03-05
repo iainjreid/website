@@ -4,11 +4,10 @@ import { Breadcrumb } from "gatsby-plugin-breadcrumb"
 import styled from "@emotion/styled"
 import colors from "../styles/colors"
 import dimensions from "../styles/dimensions"
-import Title from "./Title"
 
 const HeaderContainer = styled("header")`
   padding-top: 3em;
-  padding-bottom: 3em;
+  padding-bottom: 9em;
   display: grid;
 
   grid-template-areas: "nav"
