@@ -9,6 +9,7 @@ import CardTile from "../components/CardTile"
 import colors from "../styles/colors"
 import dimensions from "../styles/dimensions"
 import Stats from "../components/Stats"
+import SEO from "../components/SEO"
 
 const Heading = styled("div")`
   height: 100%;
@@ -132,11 +133,7 @@ export default ({ data }) => {
     },
   }
 
-  const userStats = data.github.user.repositories.edges.reduce((stats, { node: { languages, owner }}) => {
-    if (owner.login !== "iainreid820") {
-      return stats;
-    }
-
+  const userStats = data.github.user.repositories.edges.reduce((stats, { node: { languages }}) => {
     for (let { node: { name, color }, size } of languages.edges) {
       size = Math.log(size);
 
@@ -150,13 +147,14 @@ export default ({ data }) => {
     return stats
   }, {});
 
-  return (
+  return <>
+    <SEO />
     <Layout cover title={
       <Heading>
         <h1>
           Frontend programmer, sometimes a backend programmer — often <a href={home.about_links.Github} target="_blank" rel="noopener noreferrer">open source</a> 👨‍💻
         </h1>
-        {/* <Stats languages={Object.values(userStats).sort((a, b) => a.size < b.size)} /> */}
+        {/* <Stats languages={Object.values(userStats).sort((a, b) => a.size < b.size ? 1 : -1)} /> */}
       </Heading>
     }>
       <Section>
@@ -191,7 +189,7 @@ export default ({ data }) => {
         <About socialLinks={home.about_links} />
       </Section>
     </Layout>
-  )
+  </>
 }
 
 export const pageQuery = graphql`
@@ -227,7 +225,7 @@ export const pageQuery = graphql`
             }
           }
         }
-        repositories(first: 100, orderBy: {field: UPDATED_AT, direction: DESC}) {
+        repositories(orderBy: {field: UPDATED_AT, direction: DESC}, first: 100, ownerAffiliations: OWNER) {
           edges {
             node {
               languages(first: 100) {
@@ -238,9 +236,6 @@ export const pageQuery = graphql`
                   }
                   size
                 }
-              }
-              owner {
-                login
               }
             }
           }
