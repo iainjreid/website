@@ -16,7 +16,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const result = await wrapper(
     graphql(`
       query {
-        allPosts: allMarkdownRemark {
+        Posts: allMarkdownRemark(filter: {fields: {sourceName: {eq: "posts"}}}) {
           edges {
             node {
               fields {
@@ -30,7 +30,7 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
 
-        howTo: allMarkdownRemark(filter: {frontmatter: {collection: {eq: "How To"}}}) {
+        HowTo: allMarkdownRemark(filter: {frontmatter: {collection: {eq: "How To"}}}) {
           topics: group(field: frontmatter___category) {
             totalCount
             languageName: fieldValue
@@ -48,19 +48,16 @@ exports.createPages = async ({ graphql, actions }) => {
     `)
   )
 
-  const postsList = result.data.allPosts.edges;
-  const howTo = result.data.howTo;
-
   const postTemplate = require.resolve('./src/templates/post.jsx');
   const howToTopicTemplate = require.resolve('./src/templates/how-to-topic.jsx');
 
-  postsList.forEach((post) => {
+  result.data.Posts.edges.forEach((post) => {
     if (post.node.frontmatter.draft && process.env.NODE_ENV !== "development") {
       return;
     }
 
     createPage({
-      path: `/blog${post.node.fields.slug}`,
+      path: `/blog/posts${post.node.fields.slug}`,
       component: postTemplate,
       context: {
         slug: post.node.fields.slug,
@@ -68,7 +65,7 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   });
 
-  howTo.topics.forEach((topic) => {
+  result.data.HowTo.topics.forEach((topic) => {
     createPage({
       path: `/how-to/${topic.languageName.toLowerCase()}`,
       component: howToTopicTemplate,
@@ -107,10 +104,19 @@ exports.onCreateNode = async ({ node, actions:  { createNode, createNodeField },
         });
       }
 
-      return createNodeField({
-        node,
-        name: "slug",
-        value: createFilePath({ node, getNode }),
-      });
+      const parent = getNode(node.parent)
+
+      return Promise.all([
+        createNodeField({
+          node,
+          name: "sourceName",
+          value: parent.sourceInstanceName,
+        }),
+        createNodeField({
+          node,
+          name: "slug",
+          value: createFilePath({ node, getNode }),
+        })
+      ]);
   }
 }

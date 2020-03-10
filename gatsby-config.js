@@ -22,6 +22,13 @@ module.exports = {
         path: `${__dirname}/content/posts/`,
       },
     },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "devlog",
+        path: `${__dirname}/content/devlog/`,
+      },
+    },
 
     {
       resolve: "gatsby-source-graphql",

@@ -3,6 +3,7 @@ import styled from "@emotion/styled"
 import { graphql, Link } from "gatsby"
 import About from "../components/About"
 import Grid from "../components/Grid"
+import Devlog from "../components/Devlog"
 import Layout from "../components/Layout"
 import CardTile from "../components/CardTile"
 import colors from "../styles/colors"
@@ -159,7 +160,16 @@ export default ({ data }) => {
       </Heading>
     }>
       <Section>
-        <SectionHeading>Current Projects</SectionHeading>
+        <SectionHeading>Latest Devlogs</SectionHeading>
+        <Grid width={2}>
+          <Devlog compact entries={data.Devlog.edges} />
+        </Grid>
+        <ProjectAction to={"/blog/devlog"}>
+          Continue reading <span>&#8594;</span>
+        </ProjectAction>
+      </Section>
+      <Section>
+        <SectionHeading>Pinned Projects</SectionHeading>
         <Grid>
           {projects.map((project, i) => (
             <a key={i} href={project.node.url} target="_blank" rel="noopener noreferrer">
@@ -186,6 +196,18 @@ export default ({ data }) => {
 
 export const pageQuery = graphql`
   query {
+    Devlog: allMarkdownRemark(filter: {fields: {sourceName: {eq: "devlog"}}}, sort: {fields: [frontmatter___date], order: DESC}, limit: 4) {
+      edges {
+        node {
+          frontmatter {
+            title
+            date
+          }
+          html: excerpt(pruneLength: 250)
+        }
+      }
+    }
+
     github {
       user(login: "iainreid820") {
         pinnedItems(first: 6) {

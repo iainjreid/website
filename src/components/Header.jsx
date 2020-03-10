@@ -152,7 +152,7 @@ export default ({ children, title, crumbs, cover }) => (
         />
       </HeaderBreadcrumbs>
       <HeaderLinks>
-        <Link activeClassName="Link--is-active" to="/blog" partiallyActive>
+      <Link activeClassName="Link--is-active" to="/blog" partiallyActive>
           Blog
         </Link>
         <Link activeClassName="Link--is-active" to="/how-to" partiallyActive>
