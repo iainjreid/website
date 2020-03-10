@@ -16,12 +16,69 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                title
+                description
+                siteUrl
+                site_url: siteUrl
+              }
+            }
+          }
+        `,
+        feeds: [
+          {
+            serialize: ({ query: { site, allMarkdownRemark } }) => {
+              return allMarkdownRemark.edges.map((edge) => ({
+                title: edge.node.frontmatter.title,
+                date: edge.node.frontmatter.date,
+                description: edge.node.excerpt,
+                url: site.siteMetadata.siteUrl + edge.node.fields.slug,
+                guid: edge.node.fields.slug,
+                custom_elements: [{ "content:encoded": edge.node.html }],
+              }))
+            },
+            query: `
+              {
+                allMarkdownRemark(
+                  sort: { order: DESC, fields: [frontmatter___date] },
+                  filter: { fields: { sourceName: { eq: "devlog" }}}
+                ) {
+                  edges {
+                    node {
+                      fields {
+                        slug
+                      }
+                      frontmatter {
+                        title
+                        date
+                      }
+                      excerpt(pruneLength: 250)
+                    }
+                  }
+                }
+              }
+            `,
+            title: "Iain J. Reid's Devlog",
+            description: "",
+            output: "/devlog-rss.xml",
+          },
+        ],
+      },
+    },
+
+    {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "posts",
         path: `${__dirname}/content/posts/`,
       },
     },
+
     {
       resolve: "gatsby-source-filesystem",
       options: {
@@ -79,7 +136,7 @@ module.exports = {
           },
         ],
       }
-     },
+    },
 
     {
       resolve: "gatsby-plugin-google-analytics",
@@ -101,9 +158,5 @@ module.exports = {
     "gatsby-plugin-emotion",
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-sharp",
-
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // "gatsby-plugin-offline",
   ],
 }

@@ -1,4 +1,3 @@
-const path = require("path");
 const { createFilePath, createRemoteFileNode } = require("gatsby-source-filesystem");
 
 // graphql function doesn't throw an error so we have to check to check for the result.errors to throw manually
@@ -105,6 +104,15 @@ exports.onCreateNode = async ({ node, actions:  { createNode, createNodeField },
       }
 
       const parent = getNode(node.parent)
+      let slug;
+
+      switch (parent.sourceInstanceName) {
+        case "posts":
+          slug = createFilePath({ node, getNode }); break;
+        case "devlog":
+          slug = `/blog/devlog#${node.frontmatter.date.replace(/[\s:]/g, "-")}`; break;
+      }
+
 
       return Promise.all([
         createNodeField({
@@ -115,7 +123,7 @@ exports.onCreateNode = async ({ node, actions:  { createNode, createNodeField },
         createNodeField({
           node,
           name: "slug",
-          value: createFilePath({ node, getNode }),
+          value: slug,
         })
       ]);
   }

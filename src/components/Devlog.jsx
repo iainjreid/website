@@ -5,14 +5,24 @@ import colors from "../styles/colors"
 import dimensions from "../styles/dimensions"
 
 export const DevlogEntry = styled("article")`
-  padding-bottom: 2em;
+  padding-top: 1em;
+  padding-bottom: 1em;
   display: grid;
   grid-gap: 2em;
   grid-template-columns: 1fr;
   grid-template-rows: min-content;
 
+  &:first-of-type {
+    padding-top: 0;
+  }
+
+  &:last-of-type {
+    padding-bottom: 0;
+  }
+
   ${({ compact }) => !compact && `
-    padding-bottom: 5em;
+    padding-top: 2.5em;
+    padding-bottom: 2.5em;
 
     @media (min-width: ${dimensions.maxwidthDesktop}px) {
       grid-template-columns: 1fr 3fr;
@@ -52,7 +62,7 @@ export const DevlogBody = styled("div")`
 
 export default ({ compact, entries }) => <>
   {entries.map((entry, i) => (
-    <DevlogEntry compact={compact} key={i}>
+    <DevlogEntry id={entry.node.frontmatter.date.replace(/[\s:]/g, "-")} compact={compact} key={i}>
       <DevlogMeta>
         <DevlogTitle>{entry.node.frontmatter.title}</DevlogTitle>
         <DevlogDate format="MMMM D, YYYY \at HH:mm">{entry.node.frontmatter.date}</DevlogDate>
