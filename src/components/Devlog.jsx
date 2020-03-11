@@ -12,17 +12,17 @@ export const DevlogEntry = styled("article")`
   grid-template-columns: 1fr;
   grid-template-rows: min-content;
 
-  &:first-of-type {
-    padding-top: 0;
-  }
-
-  &:last-of-type {
-    padding-bottom: 0;
-  }
-
   ${({ compact }) => !compact && `
     padding-top: 2.5em;
     padding-bottom: 2.5em;
+
+    &:first-of-type {
+      padding-top: 0;
+    }
+
+    &:last-of-type {
+      padding-bottom: 0;
+    }
 
     @media (min-width: ${dimensions.maxwidthDesktop}px) {
       grid-template-columns: 1fr 3fr;
