@@ -8,3 +8,6 @@
 # Ignore build files
 /.cache/
 /public/
+
+# Ignore now.sh files
+.now
