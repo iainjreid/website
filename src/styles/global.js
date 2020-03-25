@@ -22,7 +22,6 @@ const globalStyles = css`
     margin: 0 auto;
     line-height: 1.7;
     color: ${colors.grey900};
-    -webkit-font-smoothing: antialiased;
 
     @media (max-width: ${dimensions.maxwidthMobile}px) {
       font-size: 14px;
