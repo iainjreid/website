@@ -32,7 +32,7 @@ export default ({ data, pageContext }) => {
 export const pageQuery = graphql`
   query {
     github {
-      user(login: "iainreid820") {
+      user(login: "iainjreid") {
         repositories(first: 100) {
           edges {
             node {

@@ -5,10 +5,10 @@ module.exports = {
     description: "Personal site of Iain J. Reid.",
     siteUrl: "https://chaff.land",
     social: {
-      github: "iainreid820",
+      github: "iainjreid",
       linkedin: "iainreid194",
       twitter: "iainreid421",
-      instagram: "candiedchaff"
+      instagram: "iainjreid"
     },
   },
   mapping: {

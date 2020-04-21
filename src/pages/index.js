@@ -207,7 +207,7 @@ export const pageQuery = graphql`
     }
 
     github {
-      user(login: "iainreid820") {
+      user(login: "iainjreid") {
         pinnedItems(first: 6) {
           edges {
             node {
