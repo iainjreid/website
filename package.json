@@ -2,7 +2,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
-    "gatsby": "^2.19.18",
+    "gatsby": "^5.3.3",
     "gatsby-image": "^2.2.41",
     "gatsby-plugin-breadcrumb": "^9.0.1",
     "gatsby-plugin-canonical-urls": "^2.1.20",
@@ -14,7 +14,7 @@
     "gatsby-plugin-manifest": "^2.2.41",
     "gatsby-plugin-offline": "^3.0.35",
     "gatsby-plugin-react-helmet": "^3.1.22",
-    "gatsby-plugin-sass": "^2.1.28",
+    "gatsby-plugin-sass": "^6.3.1",
     "gatsby-plugin-sharp": "^2.4.5",
     "gatsby-remark-autolink-headers": "^2.1.24",
     "gatsby-remark-embed-snippet": "^4.1.22",
